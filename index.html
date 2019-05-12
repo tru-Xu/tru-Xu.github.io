@@ -320,6 +320,186 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tru-Xu.github.io/2019/05/12/collections/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tru-Xu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Home page">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/12/collections/" class="post-title-link" itemprop="url">java集合类</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-12 22:52:09 / 修改时间：23:54:24" itemprop="dateCreated datePublished" datetime="2019-05-12T22:52:09+08:00">2019-05-12</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>简介：java常用集合类包括LinkedList、ArrayList、Stack、Queue、HashMap、LinkedHashSet、TreeSet、HashSet、ConcurrentHashMap等。其中线程安全的容器由Vector、Stack、HashTable、Enumeration（速记法V，SHE）。</p>
+<p>在IDEA（专业版）中可查看集合类的继承关系，找到指定的实现类文件：右键-》diagram-》show diagram即可查看。例如ArrayList和LinkedList的继承关系为：</p>
+<p><img src="/2019/05/12/collections/LinkedList.PNG" width="80%/"></p>
+<p><img src="/2019/05/12/collections/ArrayList.PNG" width="80%/"></p>
+<center>图 1 LinkedList与ArrayList继承关系</center>
+
+<p>LinkedList底层数据结构为链表，插入方便，查找性能差。ArrayList底层是可变数组，插入不方便、查找方便。Queue底层为链表，遵循先进先出，Stack底层数据结构基于链表，先进后出。Set集合不含有重复元素，HashSet插入顺序与存储顺序无关，LinkedHashSet插入顺序与存储顺序相同，TreeSet底层数据结构是树，插入时按照升序排序，需要实现comparable。</p>
+<p>各容器的常用方法有：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>插入</th>
+<th>取出</th>
+<th>取出并删除</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stack</td>
+<td>push</td>
+<td>peek</td>
+<td>pop</td>
+</tr>
+<tr>
+<td>Queue</td>
+<td>offer</td>
+<td>peek</td>
+<td>poll</td>
+</tr>
+<tr>
+<td>Map</td>
+<td>put(K, V)</td>
+<td>get(K)</td>
+<td>/</td>
+</tr>
+</tbody>
+</table>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://tru-Xu.github.io/2019/05/11/Http-note/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -644,7 +824,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-12 21:27:58" itemprop="dateModified" datetime="2019-05-12T21:27:58+08:00">2019-05-12</time>
+                <time title="修改时间：2019-05-13 00:08:14" itemprop="dateModified" datetime="2019-05-13T00:08:14+08:00">2019-05-13</time>
               
             
           </span>
@@ -682,24 +862,67 @@
           
             <p><strong>前言</strong></p>
 <p><a href="https://tru-xu.github.io">博客主页</a></p>
-<!-- toc -->
 <h3 id="java语言基础"><a href="#java语言基础" class="headerlink" title="java语言基础"></a>java语言基础</h3><hr>
 <ul>
-<li><p>反射</p>
+<li><p><a href="https://tru-xu.github.io/2019/05/11/collections/">java集合类</a></p>
 </li>
-<li><p>集合类</p>
+<li><p>反射</p>
 </li>
 <li><p>泛型</p>
 </li>
 </ul>
 <h3 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h3><hr>
+<ul>
+<li>Synchronize</li>
+<li>Lock</li>
+<li>线程池</li>
+<li>死锁</li>
+<li>乐观锁</li>
+</ul>
 <h3 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h3><hr>
-<h3 id="spring框架"><a href="#spring框架" class="headerlink" title="spring框架"></a>spring框架</h3><hr>
+<ul>
+<li>常用语句</li>
+<li>索引优化</li>
+<li>性能优化</li>
+</ul>
+<h3 id="Spring框架"><a href="#Spring框架" class="headerlink" title="Spring框架"></a>Spring框架</h3><hr>
+<ul>
+<li>IOC</li>
+<li>Bean生命周期</li>
+<li>AOP</li>
+<li>事务</li>
+</ul>
 <h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><hr>
+<ul>
+<li>单例模式</li>
+<li>工厂模式</li>
+<li>策略模式</li>
+<li>装饰者模式</li>
+</ul>
 <h3 id="jvm"><a href="#jvm" class="headerlink" title="jvm"></a>jvm</h3><hr>
+<ul>
+<li>jvm内存分区</li>
+<li>GC回收</li>
+<li>类文件结构</li>
+<li>并发与锁</li>
+</ul>
 <h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><hr>
+<ul>
+<li>快排</li>
+<li>堆排序</li>
+<li>KMP</li>
+<li>动态规划</li>
+<li>回溯法</li>
+</ul>
 <h3 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h3><hr>
-<p><a href="https://tru-xu.github.io/2019/05/11/Http-note/">http协议简介</a></p>
+<ul>
+<li><a href="https://tru-xu.github.io/2019/05/11/Http-note/">http协议简介</a></li>
+<li><a href>TCP协议</a></li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>github + hexo + next博客搭建踩坑</li>
+<li>git常用命令</li>
+</ul>
 
           
         
@@ -945,7 +1168,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
