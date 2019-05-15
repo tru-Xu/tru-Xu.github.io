@@ -14,7 +14,7 @@
   
 
 
-<html class="theme-next gemini use-motion" lang="zh-CN">
+<html class="theme-next muse use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -70,11 +70,11 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Gemini',
+    scheme: 'Muse',
     version: '7.1.1',
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    sidebar: {"position":"left","width":240,"display":"post","offset":12,"onmobile":false,"dimmer":false},
     back2top: true,
-    back2top_sidebar: false,
+    back2top_sidebar: true,
     fancybox: false,
     fastclick: false,
     lazyload: false,
@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://tru-xu.github.io/2019/05/11/Http-note/wireshark-capture.PNG">
 <meta property="og:image" content="http://tru-xu.github.io/2019/05/11/Http-note/各层头部.png">
 <meta property="og:image" content="http://tru-xu.github.io/2019/05/11/Http-note/proxy">
-<meta property="og:updated_time" content="2019-05-12T12:49:35.607Z">
+<meta property="og:updated_time" content="2019-05-13T15:07:20.541Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP协议简介">
 <meta name="twitter:description" content="前言：现有web请求中大都基于HTTP协议。了解HTTP协议需要具备计算机网络基础知识，笔者参考网上评价最高的《图解HTTP》这本书对HTTP协议进行系统的学习。主要介绍HTTP协议、状态码、代理、网络安全HTTPS 计算机基础 网络分层主要分为三种：   tcp/ip四层 五层协议 OSI七层  其中常用的时tcp/ip四层分层的方式，其他两层用的比较少。三种分层方法如下图1所示：  图1 网络">
@@ -288,6 +288,9 @@
   
 
   
+    
+
+  
 
   
 </nav>
@@ -307,9 +310,6 @@
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          
-            
-
           
           <div id="content" class="content">
             
@@ -390,7 +390,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-12 20:49:35" itemprop="dateModified" datetime="2019-05-12T20:49:35+08:00">2019-05-12</time>
+                <time title="修改时间：2019-05-13 23:07:20" itemprop="dateModified" datetime="2019-05-13T23:07:20+08:00">2019-05-13</time>
               
             
           </span>
@@ -468,7 +468,7 @@
 <li>IP协议中比较重要的ARP（Address Resoletion Protocol）协议，负责解析IP地址与机器MAC地址之间的关系。链路层只认MAC地址，网络层ARP协议中，规定了IP地址与MAC之间的映射关系，由于每台机器的MAC地址是唯一的，通过IP地址可以找到对应MAC地址的机器。</li>
 </ul>
 <p>TCP协议通过三次握手建立端到端的连接，并将大数据分割成一个个数据包进行传输。</p>
-<p>DNS域名系统负责IP地址与域名之间的解析。机器与机器之间交流时可以互相识别IP地址，但这对于人来说很不友好，比如访问百度时直接输入：<a href="http://www.baidu.com，而不是www.IPXXXX.com。为方便人对各个地址的访问，DNS建立了IP与域名之间的映射关系。这样就可以方便的访问你想要浏览的网站。" target="_blank" rel="noopener">www.baidu.com，而不是www.IPXXXX.com。为方便人对各个地址的访问，DNS建立了IP与域名之间的映射关系。这样就可以方便的访问你想要浏览的网站。</a></p>
+<p>DNS域名系统负责IP地址与域名之间的解析。机器与机器之间交流时可以互相识别IP地址，但这对于人来说很不友好，比如访问百度时直接输入：<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> ，而不是<a href="http://www.IPXXXX.com" target="_blank" rel="noopener">www.IPXXXX.com</a> 。 为方便人对各个地址的访问，DNS建立了IP与域名之间的映射关系。这样就可以方便的访问你想要浏览的网站。</p>
 <p>浏览某个网页的网站时，首先通过DNS服务器获取网站域名对应的IP地址；然后通过HTTP协议生成相对应的HTTP报文；经过传输层封装成TCP报文并将大数据报文切割成报文段，通过三次握手建立客户端到服务器的连接；在网络层通过IP协议簇找到IP地址对应的MAC地址，通过路由器找到最终的服务器MAC地址。至此点击某个浏览器所产生的HTTP请求报文已被封装成帧的形式从客户端发送到服务器端。服务器端从链路层到应用层逐渐解析拆分，将帧转换成HTTP报文，请求成功。</p>
 <h2 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h2><ul>
 <li>2XX 正常处理完毕<ul>
@@ -562,8 +562,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/08/导航/" rel="next" title="Java学习博客">
-                <i class="fa fa-chevron-left"></i> Java学习博客
+              <a href="/2019/05/10/hexo搭建博客踩坑/" rel="next" title="hexo搭建博客踩坑">
+                <i class="fa fa-chevron-left"></i> hexo搭建博客踩坑
               </a>
             
           </div>
@@ -643,7 +643,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -694,6 +694,11 @@
       
 
       
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
 
     </div>
   </aside>
@@ -726,7 +731,7 @@
 
 
 
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.1.1</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.1</div>
 
 
 
@@ -744,11 +749,6 @@
       </div>
     </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
     
 
     
@@ -814,10 +814,7 @@
   
 
 
-  <script src="/js/affix.js?v=7.1.1"></script>
-
-  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
-
+  <script src="/js/schemes/muse.js?v=7.1.1"></script>
 
 
 

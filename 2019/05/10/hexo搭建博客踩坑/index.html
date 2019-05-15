@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.1',
+    sidebar: {"position":"left","width":240,"display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: true,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="hexo + next搭建时遇到一些问题，包括插入图片、toc、代码行号、首行缩进等。 推荐在对应github页面的issue板块搜索自己的问题，可以少走很多弯路。 环境安装 安装node.js   安装git   然后在合适的文件夹下执行命令：  12345npm install hexo-cli -ghexo init blogcd blognpm installhexo server 此时打">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo搭建博客踩坑">
+<meta property="og:url" content="http://tru-Xu.github.io/2019/05/10/hexo搭建博客踩坑/index.html">
+<meta property="og:site_name" content="Home page">
+<meta property="og:description" content="hexo + next搭建时遇到一些问题，包括插入图片、toc、代码行号、首行缩进等。 推荐在对应github页面的issue板块搜索自己的问题，可以少走很多弯路。 环境安装 安装node.js   安装git   然后在合适的文件夹下执行命令：  12345npm install hexo-cli -ghexo init blogcd blognpm installhexo server 此时打">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-15T15:48:17.636Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hexo搭建博客踩坑">
+<meta name="twitter:description" content="hexo + next搭建时遇到一些问题，包括插入图片、toc、代码行号、首行缩进等。 推荐在对应github页面的issue板块搜索自己的问题，可以少走很多弯路。 环境安装 安装node.js   安装git   然后在合适的文件夹下执行命令：  12345npm install hexo-cli -ghexo init blogcd blognpm installhexo server 此时打">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://tru-Xu.github.io/2019/05/10/hexo搭建博客踩坑/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>hexo搭建博客踩坑 | Home page</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Home page</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tru-Xu.github.io/2019/05/10/hexo搭建博客踩坑/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tru-Xu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Home page">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">hexo搭建博客踩坑
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-10 23:20:08" itemprop="dateCreated datePublished" datetime="2019-05-10T23:20:08+08:00">2019-05-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-15 23:48:17" itemprop="dateModified" datetime="2019-05-15T23:48:17+08:00">2019-05-15</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>hexo + next搭建时遇到一些问题，包括插入图片、toc、代码行号、首行缩进等。</p>
+<p>推荐在对应github页面的issue板块搜索自己的问题，可以少走很多弯路。</p>
+<h3 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h3><ul>
+<li>安装<a href="https://nodejs.org/en/" target="_blank" rel="noopener">node.js</a></li>
+</ul>
+<ul>
+<li>安装git</li>
+</ul>
+<ul>
+<li>然后在合适的文件夹下执行命令：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">hexo init blog</span><br><span class="line">cd blog</span><br><span class="line">npm install</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+<p>此时打开 <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> ，便可以看到hexo自带的主题。</p>
+<p>在bolg文件夹下会有如下文件：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>_config.yml</td>
+<td>配置文件</td>
+</tr>
+<tr>
+<td>node_modules</td>
+<td>hexo插件</td>
+</tr>
+<tr>
+<td>public</td>
+<td>hexo g生成的文件</td>
+</tr>
+<tr>
+<td>source</td>
+<td>md文件以及资源文件</td>
+</tr>
+<tr>
+<td>theme</td>
+<td>主题文件夹</td>
+</tr>
+<tr>
+<td>db.json package.json package-lock.json</td>
+<td>json文件</td>
+</tr>
+</tbody>
+</table>
+<h3 id="配置github仓库"><a href="#配置github仓库" class="headerlink" title="配置github仓库"></a>配置github仓库</h3><ul>
+<li><p>申请github账号</p>
+</li>
+<li><p>建立一个与自己用户名相同的仓库，即 username.github.io，username必须与你的用户名一致。</p>
+</li>
+<li><p>修改hexo的_config.yml文件，将末尾的配置修改为：</p>
+</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">  repo:</span> <span class="string">git@github.com:username/username.github.io.git</span></span><br><span class="line"><span class="attr">  branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+<h3 id="主题选择"><a href="#主题选择" class="headerlink" title="主题选择"></a>主题选择</h3><p>可以在知乎上找找别人推荐的主题，无意中看到有个2016年theme的排名：<a href="https://en.abnerchou.me/Blog/5c00ca67/" target="_blank" rel="noopener">https://en.abnerchou.me/Blog/5c00ca67/</a> 。这里面的主题都还可以，样式简洁，功能全面。</p>
+<p>我想要一个自带TOC目录、页面简洁、可以查看站点文章的主题，最后权衡下来选择了next主题。</p>
+<p>yilia主题： <a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="noopener">https://github.com/litten/hexo-theme-yilia</a></p>
+<p>next 主题： <a href="https://github.com/theme-next/hexo-theme-next" target="_blank" rel="noopener">https://github.com/theme-next/hexo-theme-next</a></p>
+<p>选择好主题后，在_config文件中，将theme改为主题名称即可启用主题。</p>
+<h3 id="hexo部署"><a href="#hexo部署" class="headerlink" title="hexo部署"></a>hexo部署</h3><p>下载部署插件<strong>npm install hexo-deployer-git –save</strong></p>
+<p>部署命令：</p>
+<p><strong>hexo clean</strong>  清理缓存</p>
+<p><strong>hexo generate/hexo g</strong> 本地生成</p>
+<p><strong>hexo deploy/hexo d</strong>    部署到远程仓库</p>
+<p>或者使用<strong>hexo d -g</strong>直接部署</p>
+<p>其他hexo指令</p>
+<p><strong>hexo new/hexo n</strong> 新建文章</p>
+<p><strong>hexo server/hexo s</strong> 启动服务，本地可通过4000访问</p>
+<p><strong>hexo version/hexo v</strong> 查看hexo版本信息</p>
+<p><strong>hexo help</strong> 查看帮助</p>
+<h3 id="image引入"><a href="#image引入" class="headerlink" title="image引入"></a>image引入</h3><p>hexo官网 <a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">https://hexo.io/zh-cn/</a></p>
+<p>首先需要安装image插件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-asset-image --save</span><br></pre></td></tr></table></figure>
+<p>安装完成之后进入hexo\node_modules\hexo-asset-image文件夹，查看里面的readme文档，使用时要注意：</p>
+<p>Make sure <code>post_asset_folder: true</code> in your <code>_config.yml</code>.</p>
+<p>Just use <code>![logo](logo.jpg)</code> to insert <code>logo.jpg</code>.</p>
+<p>将hexo文件夹下的_config.yml文件的post_asset_folder属性改为true，利用hexo生成新的md文件时xxx.md时，会创建相应的xxx同名文件夹，资源文件放在文件夹中，利用<code>hexo g</code>命令时，便会将文件夹内的资源存在在public文件夹内index.html相同的文件夹内。因此插入logo.jpg图片时，只需要在md文件输入  <code>![logo](logo.jpg)</code>即可。</p>
+<ul>
+<li>对于本地而言，图片应该存放在与md文件同名的文件夹内，例如:<code>hexo n test</code></li>
+</ul>
+<p>在 hexo\source\_posts文件夹下就会生成test.md以及test文件夹。只有将test.md所依赖的资源文件放在test文件夹，<code>hexo g</code>生成时，才可将资源文件放到正确的文件夹下。而在test.md中引用logo.jpg图片时，使用 <code>![logo](logo.jpg)</code> ，在命令行输入<code>hexo s</code>运行hexo然后在 <a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a> 查看发现图片可以正确引用。但是本地md文件却看不到图片。需要改成 <code>![logo](test/logo.jpg)</code> 添加相对路径，本地才可引用成功（除非你把图片copy到md文件相同的路径下）。</p>
+<p>将路径由 <code>![logo](logo.jpg)</code> 改为 <code>![logo](test/logo.jpg)</code> 后，执行hexo g命令，在对应的index.html文件中，image的路径解析为:  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">property</span>=<span class="string">"og:image"</span> <span class="attr">content</span>=<span class="string">"http://tru-xu.github.io/2019/05/12/test/logo.jpg"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这是正确的解析，自动添加日期并且logo.jpg实际存储位置与index.html中相同。</p>
+<ul>
+<li>采坑：**这里是个大坑，大部门的中英文的md文件名称都没有问题，但文件名包含某些特定字段的md文件，图片路径会解析失败。比如<code>http</code>。</li>
+</ul>
+<p>当md文件名包含http时。例如<code>hexo n httpXXX</code>创建httpXXX.md文件，执行<code>hexo g</code>，查看对应的index.html中的图片路径：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">property</span>=<span class="string">"og:image"</span> <span class="attr">content</span>=<span class="string">"http://tru-xu.github.io/2019/05/12/httpXXX/httpXXX/logo.jpg"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>图片路径中出现两个httpXXX，在网页点击F12，在源码中查看图片路径，路径中确实也是多出了一个httpXXX。图片路径错误，无法正常加载。</p>
+<p>图片添加相对路径时，图片解析会出bug（也不能算bug，按照官方文档，图片路径只写图片名称不带相对路径时不会有问题，但这样本地编辑时就无法看到图片预览）。</p>
+<p>这里由于我不是专业前端，所以没有细看hexo图像插件的源码。应该是路径替换时发生的问题。</p>
+<h3 id="toc-目录引入"><a href="#toc-目录引入" class="headerlink" title="toc 目录引入"></a>toc 目录引入</h3><ul>
+<li>需要TOC支持的主题 yilia，icarus, indigo等。</li>
+</ul>
+<p>toc安装文档地址：<a href="https://github.com/bubkoo/hexo-toc" target="_blank" rel="noopener">https://github.com/bubkoo/hexo-toc</a> </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-toc --save</span><br></pre></td></tr></table></figure>
+<p>并修改hexo目录下的配置文件_config.yml文件,添加toc的相关配置，参数具体含义请查看上面链接里面的readme。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">toc:</span></span><br><span class="line"><span class="attr">  maxdepth:</span> <span class="number">3</span></span><br><span class="line"><span class="attr">  class:</span> <span class="string">toc</span></span><br><span class="line"><span class="attr">  slugify:</span> <span class="string">transliteration</span></span><br><span class="line"><span class="attr">  decodeEntities:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">  anchor:</span></span><br><span class="line"><span class="attr">    position:</span> <span class="string">after</span></span><br><span class="line"><span class="attr">    symbol:</span> <span class="string">'#'</span></span><br><span class="line"><span class="attr">    style:</span> <span class="string">header-anchor</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>不需要TOC支持的主题，例如next</li>
+</ul>
+<p>若使用next主题，安装hexo自带的toc后。next主题自带的toc会出现bug，点击toc目录无法跳转。在页面上F12查看next主题自带的toc链接，发现是#undefined。各种百度博客没啥用，最后早github的issue里面找到问题来源：</p>
+<p><a href="https://github.com/theme-next/hexo-theme-next/issues/380" target="_blank" rel="noopener">https://github.com/theme-next/hexo-theme-next/issues/380</a></p>
+<p>hexo的toc插件导致next自带的目录无法跳转，将hexo-toc移除之后，此问题便可解决。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm remove hexo-toc --save</span><br></pre></td></tr></table></figure>
+<h3 id="代码块行号"><a href="#代码块行号" class="headerlink" title="代码块行号"></a>代码块行号</h3><p>远程：hexo配置文件_config.yml中的height里面的line_number改为true即可。</p>
+<p>本地：typora的文件-&gt;偏好设置中找到代码块，选择显示代码块即可。</p>
+<h3 id="首行缩进"><a href="#首行缩进" class="headerlink" title="首行缩进"></a>首行缩进</h3><p>远程：themes\hexo-theme-next-master\source\css_custom\custom.styl 添加</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.post-body</span> <span class="selector-tag">p</span> &#123; <span class="attribute">text-indent</span>: <span class="number">2em</span>; &#125;</span><br></pre></td></tr></table></figure>
+<p>参考：<a href="https://github.com/iissnan/hexo-theme-next/issues/680" target="_blank" rel="noopener">https://github.com/iissnan/hexo-theme-next/issues/680</a></p>
+<p>本地：编辑–&gt;空格与换行–&gt; 首行缩进</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/08/导航/" rel="next" title="Java学习博客">
+                <i class="fa fa-chevron-left"></i> Java学习博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/11/Http-note/" rel="prev" title="HTTP协议简介">
+                HTTP协议简介 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">tru-Xu</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境安装"><span class="nav-number">1.</span> <span class="nav-text">环境安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置github仓库"><span class="nav-number">2.</span> <span class="nav-text">配置github仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主题选择"><span class="nav-number">3.</span> <span class="nav-text">主题选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo部署"><span class="nav-number">4.</span> <span class="nav-text">hexo部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#image引入"><span class="nav-number">5.</span> <span class="nav-text">image引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#toc-目录引入"><span class="nav-number">6.</span> <span class="nav-text">toc 目录引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码块行号"><span class="nav-number">7.</span> <span class="nav-text">代码块行号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#首行缩进"><span class="nav-number">8.</span> <span class="nav-text">首行缩进</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tru-Xu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.1"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
