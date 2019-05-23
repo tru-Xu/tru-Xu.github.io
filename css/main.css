@@ -1804,7 +1804,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff86ff;
+  background: #5c3912;
 }
 .feed-link,
 .chat {
@@ -2574,14 +2574,14 @@ ul.breadcrumb li+li:last-child {
   top: 0;
   overflow: hidden;
   padding: 0;
-  width: 200px;
+  width: 220px;
   background: #fff;
   box-shadow: initial;
   border-radius: initial;
 }
 @media (min-width: 1200px) {
   .container .header-inner {
-    width: 200px;
+    width: 220px;
   }
 }
 @media (max-width: 991px) {
@@ -2608,7 +2608,7 @@ ul.breadcrumb li+li:last-child {
   float: right;
   box-sizing: border-box;
   padding: 40px;
-  width: calc(100% - 212px);
+  width: calc(100% - 232px);
   background: #fff;
   min-height: 700px;
   box-shadow: initial;
@@ -2633,7 +2633,7 @@ ul.breadcrumb li+li:last-child {
   position: static;
   float: left;
   margin-left: -100%;
-  width: 200px;
+  width: 220px;
   background: #f5f7f9;
   box-shadow: none;
 }
@@ -2838,7 +2838,7 @@ ul.breadcrumb li+li:last-child {
 }
 .sidebar-inner {
   box-sizing: border-box;
-  width: 200px;
+  width: 220px;
   color: #555;
   background: #fff;
   box-shadow: initial;
