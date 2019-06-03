@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://tru-Xu.github.io/2019/06/02/thread-security/</loc>
+    
+    <lastmod>2019-06-03T15:09:38.408Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tru-Xu.github.io/2019/05/20/ConcurrentHashMap/</loc>
     
     <lastmod>2019-06-01T16:20:18.708Z</lastmod>
