@@ -105,7 +105,7 @@
 <meta property="og:description" content="前言在操作系统中，一段时间内只允许一个进程访问的资源成为临界资源。包括软件临界资源和硬件临界资源，例如打印机、栈、变量、表格等。进程中访问临界资源的代码片段成为临界区，按照临界资源的特征，临界区的代码要实现对临界资源的互斥访问。 硬件同步机制现在，大多数情况通过硬件来解决临界区的同步问题。硬件同步方法如下：  关中断  锁测试之前关闭中断，可保证同一个处理器中，计算机系统不响应其他的中断请求，无法">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://tru-xu.github.io/2019/06/02/thread-security/自旋锁.png">
-<meta property="og:updated_time" content="2019-06-04T15:41:04.562Z">
+<meta property="og:updated_time" content="2019-06-11T13:07:12.910Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="thread-security">
 <meta name="twitter:description" content="前言在操作系统中，一段时间内只允许一个进程访问的资源成为临界资源。包括软件临界资源和硬件临界资源，例如打印机、栈、变量、表格等。进程中访问临界资源的代码片段成为临界区，按照临界资源的特征，临界区的代码要实现对临界资源的互斥访问。 硬件同步机制现在，大多数情况通过硬件来解决临界区的同步问题。硬件同步方法如下：  关中断  锁测试之前关闭中断，可保证同一个处理器中，计算机系统不响应其他的中断请求，无法">
@@ -438,7 +438,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-04 23:41:04" itemprop="dateModified" datetime="2019-06-04T23:41:04+08:00">2019-06-04</time>
+                <time title="修改时间：2019-06-11 21:07:12" itemprop="dateModified" datetime="2019-06-11T21:07:12+08:00">2019-06-11</time>
               
             
           </span>
@@ -511,20 +511,20 @@
 <ul>
 <li>swap指令实现互斥</li>
 </ul>
-<p>通过swap指令实现互斥，对每个临界资源设置一个全局变量锁lock，false为空闲可访问。每个进程配置一个局部变量key，通过交换的方式实现互斥，伪代码如下：</p>
+<p>通过swap指令实现互斥，对每个临界资源设置一个全局变量锁lock，false为空闲可访问。每个进程配置一个局部变量key，通过交换的方式实现互斥。伪代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">boolean</span> *a, <span class="keyword">boolean</span> *b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> temp;</span><br><span class="line">    temp = *a;</span><br><span class="line">    *a = *b;</span><br><span class="line">    *b = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">do</span>&#123;</span><br><span class="line">    key = <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">        swap(&amp;lock, &amp;key);</span><br><span class="line">    &#125;<span class="keyword">while</span>(key != <span class="keyword">false</span>);</span><br><span class="line">    <span class="comment">// 临界区代码</span></span><br><span class="line">    ……</span><br><span class="line">    lock = <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>信号量机制</li>
 </ul>
 <p>迪杰斯特拉（跨学科大牛），提出一种新方法来实现线程同步：信号量机制。用一个整形变量S表示资源数目，这个整形变量除初始化外仅能通过两个原子操作wait(S)、signal(S)来访问，即PV操作。</p>
 <p><strong>整型信号量</strong></p>
-<p>很多临界资源可能不止一份，可以支持最多S个进程同时访问。同时访问的进程数量超过S后，后面的进程将被阻塞，-+伪代码如下：</p>
+<p>很多临界资源可能不止一份，可以支持最多S个进程同时访问。同时访问的进程数量超过S后，后面的进程将被阻塞。伪代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wait(S)&#123;</span><br><span class="line">    <span class="keyword">while</span>(S &lt;= <span class="number">0</span>);</span><br><span class="line">    S--;</span><br><span class="line">&#125;</span><br><span class="line">signal(S)&#123;</span><br><span class="line">    S++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>记录型信号量</strong> </p>
-<p>为减少资源浪费，避免在S&lt;=0时出现忙等的状态，设计出新的心好累机制：记录型信号量。原理是将要访问的临界资源不足时，调用block原语阻塞当先操作，并将PCB（进程控制块）插入到阻塞队列，释放处理机。当资源释放后，调用wakeup原语唤醒阻塞队列的第一个等待进程。当S为1时，记录型信号量就变成互斥信号量，同时只允许一个进程访问。伪代码如下：</p>
+<p>为减少资源浪费，避免在S&lt;=0时出现忙等的状态，设计出新的信号量机制：记录型信号量。原理是将要访问的临界资源不足时，调用block原语阻塞当先操作，并将PCB（进程控制块）插入到阻塞队列，释放处理机。当资源释放后，调用wakeup原语唤醒阻塞队列的第一个等待进程。当S的value为1时，记录型信号量就变成互斥信号量，同时只允许一个进程访问。伪代码如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> value;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">process_control_block</span> *<span class="title">list</span>;</span></span><br><span class="line">&#125;semaphore;</span><br><span class="line">wait(semaphore *S)&#123;</span><br><span class="line">    S-&gt;value--;</span><br><span class="line">    <span class="keyword">if</span>(S-&gt;value &lt; <span class="number">0</span>) block(S-&gt;<span class="built_in">list</span>);</span><br><span class="line">&#125;</span><br><span class="line">signal(semaphore *S)&#123;</span><br><span class="line">    S-&gt;value++;</span><br><span class="line">    <span class="keyword">if</span>(S-&gt;value &lt;= <span class="number">0</span>) wakeup(S-&gt;<span class="built_in">list</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>AND型信号量</strong></p>
-<p>现实情况中，进程在访问临界资源时，可能同时需要好几种临界资源。此时可能出现死锁的情况，为避免出现死锁，需要一种新的信号量机制：AND型信号量。当这个进程可以获取到所需的所有临界资源时，则全部分配给该进程，若有一个临界资源无法得到，则释放所有的临界资源，即持有0 或者 All临界资源。</p>
+<p>现实情况中，进程在访问临界资源时，可能同时需要好几种临界资源。此时可能出现死锁的情况，为避免出现死锁，需要一种新的信号量机制：AND型信号量。当这个进程可以获取到所需的所有临界资源时，则全部分配给该进程，若有一个临界资源无法得到，则释放所有的临界资源，即持有0 或者 所需的所有临界资源。</p>
 <p><strong>信号量集</strong></p>
 <p>记录型信号量只对某一中信号量进行加1或者减1操作，若想对n种信号量进行加m或者减m操作，则需要对n种信号量分别执行m次锁操作，这可能会增大死锁的概率。为解决此问题，对AND型信号量、记录型信号量进行扩充得到信号量集。</p>
 <p>如下所示：</p>
@@ -550,7 +550,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public void setA(java.lang.String);</span><br><span class="line">   descriptor: (Ljava/lang/String;)V</span><br><span class="line">   flags: ACC_PUBLIC</span><br><span class="line">   Code:</span><br><span class="line">     stack=2, locals=4, args_size=2</span><br><span class="line">        0: aload_1</span><br><span class="line">        1: dup</span><br><span class="line">        2: astore_2</span><br><span class="line">        3: monitorenter</span><br><span class="line">        4: aload_0</span><br><span class="line">        5: aload_1</span><br><span class="line">        6: putfield      <span class="comment">#2                  // Field a:Ljava/lang/String;</span></span><br><span class="line">        9: aload_2</span><br><span class="line">       10: monitorexit</span><br><span class="line">       11: goto          19</span><br><span class="line">       14: astore_3</span><br><span class="line">       15: aload_2</span><br><span class="line">       16: monitorexit</span><br><span class="line">       17: aload_3</span><br><span class="line">       18: athrow</span><br><span class="line">       19: <span class="built_in">return</span></span><br></pre></td></tr></table></figure>
 <p>java的线程是映射到内核线程之上的，故线程的阻塞或者唤醒都要从用户态转换到内核态，这个转换的开销可能比用户代码的开销还要大，故一般说synchronized是重锁。</p>
 <h4 id="CAS原理（乐观锁）"><a href="#CAS原理（乐观锁）" class="headerlink" title="CAS原理（乐观锁）"></a>CAS原理（乐观锁）</h4><p>阻塞同步属于悲观锁，无论是否有多个线程并发访问临界资源，都进行加锁。实际场景中可能大多数临界资源的访问不存在线程之间的竞争，此时加锁，用户态核心态转换的开销是浪费掉的，并没有什么实际意义。</p>
-<p>非阻塞同步属于乐观锁，即先使用共享变量进行操作，如果没有其他线程竞争则操作成功，否则采取补偿机制，一般是不断重试，直至成功为止。</p>
+<p>非阻塞同步属于乐观锁，即先使用共享变量进行操作，如果没有其他线程竞争则操作成功，否则采取补偿机制，补偿机制一般是不断重试，直至成功为止。</p>
 <p>计算机硬件层面退出CAS指令来帮助实现乐观锁。CAS指令包含三个操作数：V、A、B。</p>
 <ul>
 <li>V 表示变量的内存地址</li>
@@ -559,7 +559,7 @@
 </ul>
 <p>当且仅当V处的值与A相同时，处理器用B更新V处的值，否则不更新。这个CAS操作包含在java的UNSAFE类中，但方法都是JNI类型的方法，并不直接供用户使用。Atomic类以及ConcurrentHashMap等jdk源码中都有用到CAS方法。</p>
 <p>CAS简易理解例子：</p>
-<p>内存V处共享变量a的旧值A，在多线程环境中，我们队a执行加1操作，即新值B=A+1。在执行更新操作时，当V处的值仍为A时（没有被其他线程修改），则处理器将B更新V处的值。</p>
+<p>内存V处共享变量a的旧值A，在多线程环境中，我们对a执行加1操作，即新值B=A+1。在执行更新操作时，当V处的值仍为A时（没有被其他线程修改），则处理器用B更新V处的值。</p>
 <p>AtomicInteger中的getAndSet()方法，首先根据unsafe.objectFieldOffset方法获取value的内存地址。在getAndSetInt方法中，</p>
 <ul>
 <li><p>var2表示内存地址，</p>
@@ -670,6 +670,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/06/05/memory-management/" rel="prev" title="内存管理">
+                内存管理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -743,7 +747,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -766,7 +770,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -801,7 +807,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">9</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

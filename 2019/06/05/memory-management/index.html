@@ -96,21 +96,20 @@
 
 
 
-  <meta name="description" content="简介：java常用集合类包括LinkedList、ArrayList、Stack、Queue、HashMap、LinkedHashSet、TreeSet、HashSet、ConcurrentHashMap等。 其中线程安全的容器由Vector、Stack、HashTable、Enumeration（速记法V，SHE），这些是过去遗留下来的类，新程序中不建议使用。 在IDEA（专业版）中可查看集合类">
-<meta name="keywords" content="collection">
+  <meta name="description" content="内存分区jvm内存主要分为以下几块：  堆：实例对象和数组 方法区：类变量、常量、类信息、即时编译器编译后的代码 运行时常量池：class文件的常量池   虚拟机栈：局部变量、操作栈、动态链接、方法返回地址 本地方法栈：Native方法 程序计数器：当前线程执行的字节码的行号指示器 直接内存：不属于java运行时数据区，供NIO分配内存使用  其中堆和方法区是线程共享的，虚拟机栈、本地方法栈、程序">
+<meta name="keywords" content="memory">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java集合类">
-<meta property="og:url" content="http://tru-Xu.github.io/2019/05/12/collections/index.html">
+<meta property="og:title" content="内存管理">
+<meta property="og:url" content="http://tru-Xu.github.io/2019/06/05/memory-management/index.html">
 <meta property="og:site_name" content="Home page">
-<meta property="og:description" content="简介：java常用集合类包括LinkedList、ArrayList、Stack、Queue、HashMap、LinkedHashSet、TreeSet、HashSet、ConcurrentHashMap等。 其中线程安全的容器由Vector、Stack、HashTable、Enumeration（速记法V，SHE），这些是过去遗留下来的类，新程序中不建议使用。 在IDEA（专业版）中可查看集合类">
+<meta property="og:description" content="内存分区jvm内存主要分为以下几块：  堆：实例对象和数组 方法区：类变量、常量、类信息、即时编译器编译后的代码 运行时常量池：class文件的常量池   虚拟机栈：局部变量、操作栈、动态链接、方法返回地址 本地方法栈：Native方法 程序计数器：当前线程执行的字节码的行号指示器 直接内存：不属于java运行时数据区，供NIO分配内存使用  其中堆和方法区是线程共享的，虚拟机栈、本地方法栈、程序">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://tru-xu.github.io/2019/05/12/collections/LinkedList.PNG">
-<meta property="og:image" content="http://tru-xu.github.io/2019/05/12/collections/ArrayList.PNG">
-<meta property="og:updated_time" content="2019-05-20T14:15:56.533Z">
+<meta property="og:image" content="http://tru-xu.github.io/2019/06/05/memory-management/jvm虚拟机运行时数据区">
+<meta property="og:updated_time" content="2019-06-13T16:04:17.743Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java集合类">
-<meta name="twitter:description" content="简介：java常用集合类包括LinkedList、ArrayList、Stack、Queue、HashMap、LinkedHashSet、TreeSet、HashSet、ConcurrentHashMap等。 其中线程安全的容器由Vector、Stack、HashTable、Enumeration（速记法V，SHE），这些是过去遗留下来的类，新程序中不建议使用。 在IDEA（专业版）中可查看集合类">
-<meta name="twitter:image" content="http://tru-xu.github.io/2019/05/12/collections/LinkedList.PNG">
+<meta name="twitter:title" content="内存管理">
+<meta name="twitter:description" content="内存分区jvm内存主要分为以下几块：  堆：实例对象和数组 方法区：类变量、常量、类信息、即时编译器编译后的代码 运行时常量池：class文件的常量池   虚拟机栈：局部变量、操作栈、动态链接、方法返回地址 本地方法栈：Native方法 程序计数器：当前线程执行的字节码的行号指示器 直接内存：不属于java运行时数据区，供NIO分配内存使用  其中堆和方法区是线程共享的，虚拟机栈、本地方法栈、程序">
+<meta name="twitter:image" content="http://tru-xu.github.io/2019/06/05/memory-management/jvm虚拟机运行时数据区">
 
 
 
@@ -118,7 +117,7 @@
 
   
   
-  <link rel="canonical" href="http://tru-Xu.github.io/2019/05/12/collections/">
+  <link rel="canonical" href="http://tru-Xu.github.io/2019/06/05/memory-management/">
 
 
 
@@ -128,7 +127,7 @@
   };
 </script>
 
-  <title>java集合类 | Home page</title>
+  <title>内存管理 | Home page</title>
   
 
 
@@ -379,7 +378,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tru-Xu.github.io/2019/05/12/collections/">
+    <link itemprop="mainEntityOfPage" href="http://tru-Xu.github.io/2019/06/05/memory-management/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tru-Xu">
@@ -396,7 +395,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">java集合类
+          <h1 class="post-title" itemprop="name headline">内存管理
 
               
             
@@ -422,7 +421,7 @@
                 
               
 
-              <time title="创建时间：2019-05-12 22:52:09" itemprop="dateCreated datePublished" datetime="2019-05-12T22:52:09+08:00">2019-05-12</time>
+              <time title="创建时间：2019-06-05 22:31:46" itemprop="dateCreated datePublished" datetime="2019-06-05T22:31:46+08:00">2019-06-05</time>
             
 
             
@@ -439,7 +438,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-20 22:15:56" itemprop="dateModified" datetime="2019-05-20T22:15:56+08:00">2019-05-20</time>
+                <time title="修改时间：2019-06-14 00:04:17" itemprop="dateModified" datetime="2019-06-14T00:04:17+08:00">2019-06-14</time>
               
             
           </span>
@@ -456,7 +455,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java-base/" itemprop="url" rel="index"><span itemprop="name">java-base</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a></span>
 
                 
                 
@@ -498,77 +497,40 @@
       
 
       
-        <h2 id="简介："><a href="#简介：" class="headerlink" title="简介："></a>简介：</h2><p>java常用集合类包括LinkedList、ArrayList、Stack、Queue、HashMap、LinkedHashSet、TreeSet、HashSet、ConcurrentHashMap等。</p>
-<p>其中线程安全的容器由Vector、Stack、HashTable、Enumeration（速记法V，SHE），这些是过去遗留下来的类，新程序中不建议使用。</p>
-<p>在IDEA（专业版）中可查看集合类的继承关系，找到指定的实现类文件：右键- &gt; diagram-&gt;show diagram即可查看。例如ArrayList和LinkedList的继承关系如图1所示，其他继承关系自行查看。</p>
-<p><img src="/2019/05/12/collections/LinkedList.PNG" width="80%/"></p>
-<p><img src="/2019/05/12/collections/ArrayList.PNG" width="80%/"></p>
-<center>图 1 LinkedList与ArrayList继承关系</center>
+        <h3 id="内存分区"><a href="#内存分区" class="headerlink" title="内存分区"></a>内存分区</h3><p>jvm内存主要分为以下几块：</p>
+<ul>
+<li>堆：实例对象和数组</li>
+<li>方法区：类变量、常量、类信息、即时编译器编译后的代码<ul>
+<li>运行时常量池：class文件的常量池</li>
+</ul>
+</li>
+<li>虚拟机栈：局部变量、操作栈、动态链接、方法返回地址</li>
+<li>本地方法栈：Native方法</li>
+<li>程序计数器：当前线程执行的字节码的行号指示器</li>
+<li>直接内存：不属于java运行时数据区，供NIO分配内存使用</li>
+</ul>
+<p>其中堆和方法区是线程共享的，虚拟机栈、本地方法栈、程序计数器是线程私有的。运行时数据区如下图1所示（摘自《深入理解jvm虚拟机》）</p>
+<p><img src="/2019/06/05/memory-management/jvm虚拟机运行时数据区" alt="1560350455346"></p>
+<center>图 1 jvm运行时数据区</center>
 
+<h3 id="内存溢出异常"><a href="#内存溢出异常" class="headerlink" title="内存溢出异常"></a>内存溢出异常</h3><p>内存溢出异常根据内存的分区类型可分为：堆溢出、栈溢出、本地方法栈溢出、方法区和运行池常量溢出、直接内存溢出。</p>
+<h4 id="堆溢出"><a href="#堆溢出" class="headerlink" title="堆溢出"></a>堆溢出</h4><p>溢出条件在堆中创建实例对象且被GC Roots到对象之间有可达路径。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * -Xms20m -Xmx20m -XX:+HeapDumpOnOutOfMemoryError</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HeapOutMemory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">OOMObject</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">15</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;OOMObject&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>)&#123;</span><br><span class="line">            list.add(<span class="keyword">new</span> OOMObject());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>list为GC roots，且list与对象实例存在可达路径，故新建的对象不会被垃圾回收，导致堆内存溢出：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">"E:\Program Files\Java\jdk1.8.0_91\bin\java" -Xms20m -Xmx20m -XX:+HeapDumpOnOutOfMemoryError "-javaagent:D:\Program Files\JetBrains\IntelliJ IDEA 2017.3.4\lib\idea_rt.jar=50605:D:\Program Files\JetBrains\IntelliJ IDEA ……</span><br><span class="line">java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">Dumping heap to java_pid3704.hprof ...</span><br><span class="line">Exception in thread "main" java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">Heap dump file created [31531866 bytes in 0.195 secs]</span><br><span class="line">	at java.util.Arrays.copyOf(Arrays.java:3210)</span><br><span class="line">	at java.util.Arrays.copyOf(Arrays.java:3181)</span><br><span class="line">	at java.util.ArrayList.grow(ArrayList.java:261)</span><br><span class="line">	at java.util.ArrayList.ensureExplicitCapacity(ArrayList.java:235)</span><br><span class="line">	at java.util.ArrayList.ensureCapacityInternal(ArrayList.java:227)</span><br><span class="line">	at java.util.ArrayList.add(ArrayList.java:458)</span><br><span class="line">	at memory.HeapOutMemory.main(HeapOutMemory.java:15)</span><br><span class="line"></span><br><span class="line">Process finished with exit code 1</span><br></pre></td></tr></table></figure>
+<h4 id="栈溢出"><a href="#栈溢出" class="headerlink" title="栈溢出"></a>栈溢出</h4><p>栈溢出包含两种错误：</p>
 <ul>
-<li>List<ul>
-<li>LinkedList底层数据结构为链表，插入方便，查找性能差。</li>
-<li>ArrayList底层是可变数组，插入不方便、查找方便。</li>
+<li>栈深度过大，超过虚拟机允许的最大深度，抛出StackOverflowError</li>
+<li>虚拟机在扩展栈时无法申请到足够的内存空间，抛出OutOfMemoryError</li>
 </ul>
-</li>
-<li>Queue<ul>
-<li>LinkedList 先进先出。</li>
-<li>PriorityQueue 底层数据结构是堆，需实现Comparable接口。</li>
-</ul>
-</li>
-<li><p>Stack</p>
-<ul>
-<li>Stack 底层数据结构基于链表，先进后出。</li>
-</ul>
-</li>
-<li><p>Set</p>
-<ul>
-<li>HashSet 插入顺序与存储顺序无关，需实现equals和HashCode方法。</li>
-<li>LinkedHashSet 插入顺序与存储顺序相同，需实现equals和HashCode方法。</li>
-<li>TreeSet 底层数据结构是树，插入时按照升序排序。需实现equals和Comparable方法。</li>
-</ul>
-</li>
-<li>Map<ul>
-<li>HashMap 插入顺序与存储顺序无关，底层数据结构是哈希表。</li>
-<li>LinkedHashMap 插入顺序与存储顺序相同。底层数据结构是哈希表。</li>
-<li>TreeMap 底层数据结构是红黑树，顺序有Comparator决定，存储结果是有序的。</li>
-<li>WeakHashMap 与HashMap相似，不同在于允许垃圾回收器回收键值对（没有被其他地方引用的键）。</li>
-<li>ConcurrentHashMap 多线程版本的哈希表，支持并发访问。</li>
-</ul>
-</li>
-</ul>
-<p>各容器的常用方法有：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>插入</th>
-<th>取出</th>
-<th>取出并删除</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Stack</td>
-<td>push</td>
-<td>peek</td>
-<td>pop</td>
-</tr>
-<tr>
-<td>Queue</td>
-<td>offer</td>
-<td>peek</td>
-<td>poll</td>
-</tr>
-<tr>
-<td>Map</td>
-<td>put(K, V)</td>
-<td>get(K)</td>
-<td>/</td>
-</tr>
-</tbody>
-</table>
-
+<p>java方法调用时会建立相对应的栈信息，因此栈溢出可通过无限制的方法调用来实现。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StackOverflowError</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> stackLength = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stackLeak</span><span class="params">()</span></span>&#123;</span><br><span class="line">        stackLength++;</span><br><span class="line">        stackLeak();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        StackOverflowError stackOverflowError = <span class="keyword">new</span> StackOverflowError();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            stackOverflowError.stackLeak();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Throwable e)&#123;</span><br><span class="line">            System.out.print(<span class="string">"stack length:"</span> + stackOverflowError.stackLength);</span><br><span class="line">            <span class="keyword">throw</span> e;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>stackLeak方法递归调用自己，最终导致栈深度超过虚拟机指定的栈深度而报异常，异常信息如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"E:\Program Files\Java\jdk1.8.0_91\bin\java"</span> -Xms20m -Xmx20m <span class="string">"-javaagent:D:\Program Files\JetBrains\IntelliJ IDEA 2017.3.4\lib\idea_rt.jar=51044:D:\Program ……memory.StackOverflowError</span></span><br><span class="line"><span class="string">stack length:19505</span></span><br><span class="line"><span class="string">Exception in thread "</span>main<span class="string">" java.lang.StackOverflowError</span></span><br><span class="line"><span class="string">	at memory.StackOverflowError.stackLeak(StackOverflowError.java:9)</span></span><br><span class="line"><span class="string">	at memory.StackOverflowError.stackLeak(StackOverflowError.java:9)</span></span><br><span class="line"><span class="string">	at memory.StackOverflowError.stackLeak(StackOverflowError.java:9)</span></span><br><span class="line"><span class="string">	……</span></span><br></pre></td></tr></table></figure>
+<p>栈是线程私有的，所以每建立一个线程都会分配相应的栈内存。可以通过无线创建栈来验证第二种OutOfMemoryError报错信息。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StackOutMemory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">running</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>)&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stackOutMemory</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>)&#123;</span><br><span class="line">            Thread thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                    running();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            thread.start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        StackOutMemory stackOutMemory = <span class="keyword">new</span> StackOutMemory();</span><br><span class="line">        stackOutMemory.stackOutMemory();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果会报outOfMemoryError。</p>
+<h4 id="方法区溢出"><a href="#方法区溢出" class="headerlink" title="方法区溢出"></a>方法区溢出</h4>
       
     </div>
 
@@ -624,7 +586,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/collection/" rel="tag"># collection</a>
+            <a href="/tags/memory/" rel="tag"># memory</a>
           
         </div>
       
@@ -637,8 +599,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/11/Http-note/" rel="next" title="HTTP协议简介">
-                <i class="fa fa-chevron-left"></i> HTTP协议简介
+              <a href="/2019/06/02/thread-security/" rel="next" title="thread-security">
+                <i class="fa fa-chevron-left"></i> thread-security
               </a>
             
           </div>
@@ -646,10 +608,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/15/equals与hashCode/" rel="prev" title="equals与hashCode方法重写">
-                equals与hashCode方法重写 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -874,7 +832,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介："><span class="nav-number">1.</span> <span class="nav-text">简介：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存分区"><span class="nav-number">1.</span> <span class="nav-text">内存分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存溢出异常"><span class="nav-number">2.</span> <span class="nav-text">内存溢出异常</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#堆溢出"><span class="nav-number">2.1.</span> <span class="nav-text">堆溢出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#栈溢出"><span class="nav-number">2.2.</span> <span class="nav-text">栈溢出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法区溢出"><span class="nav-number">2.3.</span> <span class="nav-text">方法区溢出</span></a></li></ol></li></ol></div>
             
 
           </div>
