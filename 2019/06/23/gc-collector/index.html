@@ -96,17 +96,18 @@
 
 
 
-  <meta name="description" content="前言：博客主页 java语言基础  java集合类 eqauls与hashCode重写 ConcurrentHashMap   反射 泛型  多线程  Synchronize Lock 线程池 死锁 乐观锁  MySQL  常用语句 索引优化 性能优化  Spring框架  IOC Bean生命周期 AOP 事务  设计模式  单例模式 工厂模式 策略模式 装饰者模式 代理模式  jvm  jvm">
+  <meta name="description" content="前言：java与C++最大的不同点：内存管理java交由虚拟机管理，无需开发用户自己分配与管理，而C++需要自己分配并释放内存。而java内存的回收是由垃圾收集器完成，接下来我们讨论垃圾回收的几个问题：  回收那些内存？ 何时回收？ 怎么回收？  垃圾回收目标jvm内存分区及管理请移步java内存管理。在各个类型的内存分区中，栈以及本地方法栈中的内存随着线程或者方法的结束而释放，不需要进行额外的管">
+<meta name="keywords" content="gc,gc collector">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java学习博客">
-<meta property="og:url" content="http://tru-Xu.github.io/2019/05/08/导航/index.html">
+<meta property="og:title" content="jvm(2)--gc垃圾回收器">
+<meta property="og:url" content="http://tru-Xu.github.io/2019/06/23/gc-collector/index.html">
 <meta property="og:site_name" content="Home page">
-<meta property="og:description" content="前言：博客主页 java语言基础  java集合类 eqauls与hashCode重写 ConcurrentHashMap   反射 泛型  多线程  Synchronize Lock 线程池 死锁 乐观锁  MySQL  常用语句 索引优化 性能优化  Spring框架  IOC Bean生命周期 AOP 事务  设计模式  单例模式 工厂模式 策略模式 装饰者模式 代理模式  jvm  jvm">
+<meta property="og:description" content="前言：java与C++最大的不同点：内存管理java交由虚拟机管理，无需开发用户自己分配与管理，而C++需要自己分配并释放内存。而java内存的回收是由垃圾收集器完成，接下来我们讨论垃圾回收的几个问题：  回收那些内存？ 何时回收？ 怎么回收？  垃圾回收目标jvm内存分区及管理请移步java内存管理。在各个类型的内存分区中，栈以及本地方法栈中的内存随着线程或者方法的结束而释放，不需要进行额外的管">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-15T16:21:40.179Z">
+<meta property="og:updated_time" content="2019-06-23T16:06:14.292Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java学习博客">
-<meta name="twitter:description" content="前言：博客主页 java语言基础  java集合类 eqauls与hashCode重写 ConcurrentHashMap   反射 泛型  多线程  Synchronize Lock 线程池 死锁 乐观锁  MySQL  常用语句 索引优化 性能优化  Spring框架  IOC Bean生命周期 AOP 事务  设计模式  单例模式 工厂模式 策略模式 装饰者模式 代理模式  jvm  jvm">
+<meta name="twitter:title" content="jvm(2)--gc垃圾回收器">
+<meta name="twitter:description" content="前言：java与C++最大的不同点：内存管理java交由虚拟机管理，无需开发用户自己分配与管理，而C++需要自己分配并释放内存。而java内存的回收是由垃圾收集器完成，接下来我们讨论垃圾回收的几个问题：  回收那些内存？ 何时回收？ 怎么回收？  垃圾回收目标jvm内存分区及管理请移步java内存管理。在各个类型的内存分区中，栈以及本地方法栈中的内存随着线程或者方法的结束而释放，不需要进行额外的管">
 
 
 
@@ -114,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="http://tru-Xu.github.io/2019/05/08/导航/">
+  <link rel="canonical" href="http://tru-Xu.github.io/2019/06/23/gc-collector/">
 
 
 
@@ -124,7 +125,7 @@
   };
 </script>
 
-  <title>Java学习博客 | Home page</title>
+  <title>jvm(2)--gc垃圾回收器 | Home page</title>
   
 
 
@@ -375,7 +376,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tru-Xu.github.io/2019/05/08/导航/">
+    <link itemprop="mainEntityOfPage" href="http://tru-Xu.github.io/2019/06/23/gc-collector/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tru-Xu">
@@ -392,7 +393,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Java学习博客
+          <h1 class="post-title" itemprop="name headline">jvm(2)--gc垃圾回收器
 
               
             
@@ -418,7 +419,7 @@
                 
               
 
-              <time title="创建时间：2019-05-08 23:09:16" itemprop="dateCreated datePublished" datetime="2019-05-08T23:09:16+08:00">2019-05-08</time>
+              <time title="创建时间：2019-06-23 23:33:44" itemprop="dateCreated datePublished" datetime="2019-06-23T23:33:44+08:00">2019-06-23</time>
             
 
             
@@ -435,11 +436,29 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-16 00:21:40" itemprop="dateModified" datetime="2019-05-16T00:21:40+08:00">2019-05-16</time>
+                <time title="修改时间：2019-06-24 00:06:14" itemprop="dateModified" datetime="2019-06-24T00:06:14+08:00">2019-06-24</time>
               
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -476,70 +495,27 @@
       
 
       
-        <h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a><strong>前言：</strong></h3><p><a href="https://tru-xu.github.io">博客主页</a></p>
-<h3 id="java语言基础"><a href="#java语言基础" class="headerlink" title="java语言基础"></a>java语言基础</h3><hr>
+        <h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>java与C++最大的不同点：内存管理java交由虚拟机管理，无需开发用户自己分配与管理，而C++需要自己分配并释放内存。而java内存的回收是由垃圾收集器完成，接下来我们讨论垃圾回收的几个问题：</p>
 <ul>
-<li><a href="https://tru-xu.github.io/2019/05/11/collections/">java集合类</a><ul>
-<li><a href="https://tru-xu.github.io/2019/05/15/equals与hashCode/">eqauls与hashCode重写</a></li>
-<li><a href>ConcurrentHashMap</a></li>
+<li>回收那些内存？</li>
+<li>何时回收？</li>
+<li>怎么回收？</li>
 </ul>
-</li>
-<li>反射</li>
-<li>泛型</li>
-</ul>
-<h3 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h3><hr>
+<h3 id="垃圾回收目标"><a href="#垃圾回收目标" class="headerlink" title="垃圾回收目标"></a>垃圾回收目标</h3><p>jvm内存分区及管理请移步<a href="https://tru-xu.github.io/2019/06/05/memory-management/">java内存管理</a>。在各个类型的内存分区中，栈以及本地方法栈中的内存随着线程或者方法的结束而释放，不需要进行额外的管理。而堆内存里面的实例对象、数组对象都是在编译期不可知的，只有在运行阶段才知道要创建哪些对象，这些内存的分配和回收是动态的，故需要垃圾回收器对这些对象进行操作。</p>
+<p>根据一个堆内的对象是否已死决定是否需要回收这个对象，那么如何判定对象已死（没有其他地方引用）呢？目前有两种方法：</p>
 <ul>
-<li>Synchronize</li>
-<li>Lock</li>
-<li>线程池</li>
-<li>死锁</li>
-<li>乐观锁</li>
+<li>引用计数法</li>
+<li>可达性分析法</li>
 </ul>
-<h3 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h3><hr>
-<ul>
-<li>常用语句</li>
-<li>索引优化</li>
-<li>性能优化</li>
-</ul>
-<h3 id="Spring框架"><a href="#Spring框架" class="headerlink" title="Spring框架"></a>Spring框架</h3><hr>
-<ul>
-<li>IOC</li>
-<li>Bean生命周期</li>
-<li>AOP</li>
-<li>事务</li>
-</ul>
-<h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><hr>
-<ul>
-<li>单例模式</li>
-<li>工厂模式</li>
-<li>策略模式</li>
-<li>装饰者模式</li>
-<li>代理模式</li>
-</ul>
-<h3 id="jvm"><a href="#jvm" class="headerlink" title="jvm"></a>jvm</h3><hr>
-<ul>
-<li>jvm内存分区</li>
-<li>GC回收</li>
-<li>类文件结构</li>
-<li>并发与锁</li>
-</ul>
-<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><hr>
-<ul>
-<li>快排</li>
-<li>堆排序</li>
-<li>KMP</li>
-<li>动态规划</li>
-<li>回溯法</li>
-</ul>
-<h3 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h3><hr>
-<ul>
-<li><a href="https://tru-xu.github.io/2019/05/11/Http-note/">http协议简介</a></li>
-<li><a href>TCP协议</a></li>
-</ul>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
-<li><a href="https://tru-xu.github.io/2019/05/10/hexo搭建博客踩坑/">github + hexo + next博客搭建踩坑</a></li>
-<li>git常用命令</li>
-</ul>
+<h4 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h4><p>通过在对象中添加一个引用计数器来记录对象的引用数量，引用这个对象时，数量加1，失效时减1 。这个方法是简单，但是无法解决循环引用的问题。A引用B，B引用A，此时因为相互引用，AB两个对象永远无法回收。</p>
+<h4 id="可达性分析法"><a href="#可达性分析法" class="headerlink" title="可达性分析法"></a>可达性分析法</h4><p>通过GC Roots对象作为起始点，沿着引用链可以达到的对象不可回收，GC Roots对象的任何引用链都达不到的对象，可以回收。</p>
+<p>GC Roots对象：</p>
+<ol>
+<li>虚拟机栈中引用的对象</li>
+<li>方法区中静态属性引用的对象</li>
+<li>方法区中常量引用的对象</li>
+<li>本地方法栈中JNI引用的对象</li>
+</ol>
 
       
     </div>
@@ -594,6 +570,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/gc/" rel="tag"># gc</a>
+          
+            <a href="/tags/gc-collector/" rel="tag"># gc collector</a>
+          
+        </div>
+      
 
       
       
@@ -603,8 +587,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/07/随笔/" rel="next" title="随笔">
-                <i class="fa fa-chevron-left"></i> 随笔
+              <a href="/2019/06/05/memory-management/" rel="next" title="jvm(1)--内存管理">
+                <i class="fa fa-chevron-left"></i> jvm(1)--内存管理
               </a>
             
           </div>
@@ -612,10 +596,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/10/hexo搭建博客踩坑/" rel="prev" title="hexo搭建博客踩坑">
-                hexo搭建博客踩坑 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -844,7 +824,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java语言基础"><span class="nav-number">2.</span> <span class="nav-text">java语言基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程"><span class="nav-number">3.</span> <span class="nav-text">多线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL"><span class="nav-number">4.</span> <span class="nav-text">MySQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring框架"><span class="nav-number">5.</span> <span class="nav-text">Spring框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计模式"><span class="nav-number">6.</span> <span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jvm"><span class="nav-number">7.</span> <span class="nav-text">jvm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法"><span class="nav-number">8.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算机网络"><span class="nav-number">9.</span> <span class="nav-text">计算机网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">10.</span> <span class="nav-text">其他</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#垃圾回收目标"><span class="nav-number">2.</span> <span class="nav-text">垃圾回收目标</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#引用计数法"><span class="nav-number">2.1.</span> <span class="nav-text">引用计数法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可达性分析法"><span class="nav-number">2.2.</span> <span class="nav-text">可达性分析法</span></a></li></ol></li></ol></div>
             
 
           </div>

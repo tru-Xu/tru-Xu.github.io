@@ -99,17 +99,18 @@
   <meta name="description" content="内存分区jvm内存主要分为以下几块：  堆：实例对象和数组 方法区：类变量、常量、类信息、即时编译器编译后的代码 运行时常量池：class文件的常量池   虚拟机栈：局部变量、操作栈、动态链接、方法返回地址 本地方法栈：Native方法 程序计数器：当前线程执行的字节码的行号指示器 直接内存：不属于java运行时数据区，供NIO分配内存使用  其中堆和方法区是线程共享的，虚拟机栈、本地方法栈、程序">
 <meta name="keywords" content="memory">
 <meta property="og:type" content="article">
-<meta property="og:title" content="内存管理">
+<meta property="og:title" content="jvm(1)--内存管理">
 <meta property="og:url" content="http://tru-Xu.github.io/2019/06/05/memory-management/index.html">
 <meta property="og:site_name" content="Home page">
 <meta property="og:description" content="内存分区jvm内存主要分为以下几块：  堆：实例对象和数组 方法区：类变量、常量、类信息、即时编译器编译后的代码 运行时常量池：class文件的常量池   虚拟机栈：局部变量、操作栈、动态链接、方法返回地址 本地方法栈：Native方法 程序计数器：当前线程执行的字节码的行号指示器 直接内存：不属于java运行时数据区，供NIO分配内存使用  其中堆和方法区是线程共享的，虚拟机栈、本地方法栈、程序">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://tru-xu.github.io/2019/06/05/memory-management/jvm虚拟机运行时数据区">
-<meta property="og:updated_time" content="2019-06-13T16:04:17.743Z">
+<meta property="og:image" content="http://tru-xu.github.io/2019/06/05/memory-management/jvm虚拟机运行时数据区.jpg">
+<meta property="og:image" content="http://tru-xu.github.io/2019/06/05/memory-management/method-area.jpg">
+<meta property="og:updated_time" content="2019-06-23T15:46:10.304Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="内存管理">
+<meta name="twitter:title" content="jvm(1)--内存管理">
 <meta name="twitter:description" content="内存分区jvm内存主要分为以下几块：  堆：实例对象和数组 方法区：类变量、常量、类信息、即时编译器编译后的代码 运行时常量池：class文件的常量池   虚拟机栈：局部变量、操作栈、动态链接、方法返回地址 本地方法栈：Native方法 程序计数器：当前线程执行的字节码的行号指示器 直接内存：不属于java运行时数据区，供NIO分配内存使用  其中堆和方法区是线程共享的，虚拟机栈、本地方法栈、程序">
-<meta name="twitter:image" content="http://tru-xu.github.io/2019/06/05/memory-management/jvm虚拟机运行时数据区">
+<meta name="twitter:image" content="http://tru-xu.github.io/2019/06/05/memory-management/jvm虚拟机运行时数据区.jpg">
 
 
 
@@ -127,7 +128,7 @@
   };
 </script>
 
-  <title>内存管理 | Home page</title>
+  <title>jvm(1)--内存管理 | Home page</title>
   
 
 
@@ -395,7 +396,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">内存管理
+          <h1 class="post-title" itemprop="name headline">jvm(1)--内存管理
 
               
             
@@ -438,7 +439,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-14 00:04:17" itemprop="dateModified" datetime="2019-06-14T00:04:17+08:00">2019-06-14</time>
+                <time title="修改时间：2019-06-23 23:46:10" itemprop="dateModified" datetime="2019-06-23T23:46:10+08:00">2019-06-23</time>
               
             
           </span>
@@ -510,9 +511,8 @@
 <li>直接内存：不属于java运行时数据区，供NIO分配内存使用</li>
 </ul>
 <p>其中堆和方法区是线程共享的，虚拟机栈、本地方法栈、程序计数器是线程私有的。运行时数据区如下图1所示（摘自《深入理解jvm虚拟机》）</p>
-<p><img src="/2019/06/05/memory-management/jvm虚拟机运行时数据区" alt="1560350455346"></p>
-<center>图 1 jvm运行时数据区</center>
-
+<p><img src="/2019/06/05/memory-management/jvm虚拟机运行时数据区.jpg" width="60%/"></p>
+<p><center>图 1 jvm运行时数据区</center></p>
 <h3 id="内存溢出异常"><a href="#内存溢出异常" class="headerlink" title="内存溢出异常"></a>内存溢出异常</h3><p>内存溢出异常根据内存的分区类型可分为：堆溢出、栈溢出、本地方法栈溢出、方法区和运行池常量溢出、直接内存溢出。</p>
 <h4 id="堆溢出"><a href="#堆溢出" class="headerlink" title="堆溢出"></a>堆溢出</h4><p>溢出条件在堆中创建实例对象且被GC Roots到对象之间有可达路径。代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * -Xms20m -Xmx20m -XX:+HeapDumpOnOutOfMemoryError</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HeapOutMemory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">OOMObject</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">15</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        List&lt;OOMObject&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>)&#123;</span><br><span class="line">            list.add(<span class="keyword">new</span> OOMObject());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -529,8 +529,35 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"E:\Program Files\Java\jdk1.8.0_91\bin\java"</span> -Xms20m -Xmx20m <span class="string">"-javaagent:D:\Program Files\JetBrains\IntelliJ IDEA 2017.3.4\lib\idea_rt.jar=51044:D:\Program ……memory.StackOverflowError</span></span><br><span class="line"><span class="string">stack length:19505</span></span><br><span class="line"><span class="string">Exception in thread "</span>main<span class="string">" java.lang.StackOverflowError</span></span><br><span class="line"><span class="string">	at memory.StackOverflowError.stackLeak(StackOverflowError.java:9)</span></span><br><span class="line"><span class="string">	at memory.StackOverflowError.stackLeak(StackOverflowError.java:9)</span></span><br><span class="line"><span class="string">	at memory.StackOverflowError.stackLeak(StackOverflowError.java:9)</span></span><br><span class="line"><span class="string">	……</span></span><br></pre></td></tr></table></figure>
 <p>栈是线程私有的，所以每建立一个线程都会分配相应的栈内存。可以通过无线创建栈来验证第二种OutOfMemoryError报错信息。代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StackOutMemory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">running</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>)&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stackOutMemory</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>)&#123;</span><br><span class="line">            Thread thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                    running();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            thread.start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        StackOutMemory stackOutMemory = <span class="keyword">new</span> StackOutMemory();</span><br><span class="line">        stackOutMemory.stackOutMemory();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行结果会报outOfMemoryError。</p>
-<h4 id="方法区溢出"><a href="#方法区溢出" class="headerlink" title="方法区溢出"></a>方法区溢出</h4>
+<p>运行结果会报OutOfMemoryError。</p>
+<h4 id="方法区溢出"><a href="#方法区溢出" class="headerlink" title="方法区溢出"></a>方法区溢出</h4><p>jdk1.6以前方法区包含永久代PermGen，1.7、1.8已经着手去除永生代，1.8方法区中已经不包含永久代。重点分析jdk1.8中方法区的溢出情况，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PermGen</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException</span>&#123;</span><br><span class="line">        List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        String base = <span class="string">"intern"</span>;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            list.add(base.intern());</span><br><span class="line">            base += base;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当参数只设置-XX:PermSize=10M -XX:MaxPermSize=10M时，程序并不会抛出异常，会一直执行。当指定堆大小时：-Xmx20M，程序抛出堆溢出异常：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"E:\Program Files\Java\jdk1.8.0_91\bin\java"</span> -Xmx20M -XX:PermSize=10M -XX:MaxPermSize=10M -XX:MaxMetaspaceSize=10m <span class="string">"-javaagent:D:\Program ……</span></span><br><span class="line"><span class="string">Exception in thread "</span>main<span class="string">" java.lang.OutOfMemoryError: Java heap space</span></span><br><span class="line"><span class="string">	at java.util.Arrays.copyOf(Arrays.java:3332)</span></span><br><span class="line"><span class="string">	at java.lang.AbstractStringBuilder.expandCapacity(AbstractStringBuilder.java:137)</span></span><br><span class="line"><span class="string">	at java.lang.AbstractStringBuilder.ensureCapacityInternal(AbstractStringBuilder.java:121)</span></span><br><span class="line"><span class="string">	at java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:421)</span></span><br><span class="line"><span class="string">	at java.lang.StringBuilder.append(StringBuilder.java:136)</span></span><br><span class="line"><span class="string">	at memory.PermGen.main(PermGen.java:19)</span></span><br><span class="line"><span class="string">Java HotSpot(TM) 64-Bit Server VM warning: ignoring option PermSize=10M; support was removed in 8.0</span></span><br><span class="line"><span class="string">Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=10M; support was removed in 8.0</span></span><br></pre></td></tr></table></figure>
+<p>通过上述例子输出结果可以发现，jdk1.8之后，PermSize、MaxPermSize参数无效，证明永久代已从1.8中移除，那么思考如下问题：</p>
+<ol>
+<li>方法区分配在哪个内存区域呢？</li>
+<li>为何报堆内存溢出？难道方法区在堆内存中分配吗？</li>
+</ol>
+<p>查看资料发现jdk1.7中方法区在堆内存中分配，但在jdk1.8中方法区在元空间中分配。具体如下图所示：</p>
+<p><img src="/2019/06/05/memory-management/method-area.jpg" width="50%/"></p>
+<p><center>图 2  不同版本的jdk方法区</center><br>在jdk1.8中，将方法区分配到一个新的内存区域：元空间。元空间与虚拟机的内存大小无关，受到宿主机本身的总内存大小的限制，与直接内存类似。</p>
+<p>回到刚才的问题，常量池在方法区中分配，而方法区又不在堆内存中，为何会报堆内存溢出异常？这得仔细探讨另一个问题：intern()函数生成的对象存放在哪里？</p>
+<p>查阅资料发现：</p>
+<ul>
+<li>jdk1.6中，String.intern()函数会检测常量池中是否已存在字符串常量，若不存在（首次遇到），则将对象实例复制到字符串常量池中，若已存在则返回常量池中的字符串引用。</li>
+<li>而jdk1.7以后，intern()实现并不会将首次出现的字符串实例复制到常量池，而是只记录字符串首次出现的实例引用。</li>
+</ul>
+<p>故上述函数list.add(base.intern())操作，会将base对象实例创建在堆内存上，常量池只是存放字符串常量的引用，故我们加上-Xmx=10m限制堆内存大小而没有限制元空间大小时，会报堆内存溢出。</p>
+<p>如果运行时修改虚拟机参数为：-Xmx200M -XX:MaxMetaspaceSize=1m，结果为：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"E:\Program Files\Java\jdk1.8.0_91\bin\java"</span> -Xmx200M -XX:PermSize=10M -XX:MaxPermSize=10M -XX:MaxMetaspaceSize=1m <span class="string">"-javaagent:D:\Program Files\JetBrains\IntelliJ IDEA 2017.3.4\lib\idea_rt.jar=60736:D:\Program Files\JetBrains\IntelliJ IDEA 2017.3.4\bin"</span> -Dfile.encoding=UTF-8 -classpath ……</span><br><span class="line">Error occurred during initialization of VM</span><br><span class="line">OutOfMemoryError: Metaspace</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM warning: ignoring option PermSize=10M; support was removed <span class="keyword">in</span> 8.0</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=10M; support was removed <span class="keyword">in</span> 8.0</span><br><span class="line"></span><br><span class="line">Process finished with <span class="built_in">exit</span> code 1</span><br></pre></td></tr></table></figure>
+<p>此时报元空间内存溢出，我们将堆内存的大小设为元空间大小的200倍，此时元空间比堆内存先溢出，常量池存储的引用超过1m，报元空间溢出。</p>
+<p>因此jdk1.8中，字符串实例存储在堆内存中，实例引用存储在运行时常量池，而运行时常量池在方法区中，方法区位于元数据区。</p>
+<h4 id="直接内存溢出"><a href="#直接内存溢出" class="headerlink" title="直接内存溢出"></a>直接内存溢出</h4><p>直接内存可通过-XX:MaxDirectMemorySize指定，未指定则默认与java的堆内存大小一致，可通过Unsafe实例进行内存分配。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DirectMemoryError</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> _1MB = <span class="number">1024</span>*<span class="number">1024</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        Field unsafeField = Unsafe.class.getDeclaredFields()[<span class="number">0</span>];</span><br><span class="line">        unsafeField.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        Unsafe unsafe = (Unsafe)unsafeField.get(<span class="keyword">null</span>);</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            unsafe.allocateMemory(_1MB);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>异常结果为：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"E:\Program Files\Java\jdk1.8.0_91\bin\java"</span> -Xms20M -XX:MaxDirectMemorySize=10M <span class="string">"-javaagent:D:\Program Files\JetBrains\IntelliJ IDEA 2017.3.4\lib\idea_rt.jar=50267:D:\Program Files\JetBrains\IntelliJ IDEA 2017.3.4\bin"</span> -Dfile.encoding=UTF-8 -classpath <span class="string">"E:\Program ……</span></span><br><span class="line"><span class="string">Exception in thread "</span>main<span class="string">" java.lang.OutOfMemoryError</span></span><br><span class="line"><span class="string">	at sun.misc.Unsafe.allocateMemory(Native Method)</span></span><br><span class="line"><span class="string">	at memory.DirectMemoryError.main(DirectMemoryError.java:15)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Process finished with exit code 1</span></span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -599,8 +626,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/02/thread-security/" rel="next" title="thread-security">
-                <i class="fa fa-chevron-left"></i> thread-security
+              <a href="/2019/06/02/thread-security/" rel="next" title="jvm(3)--thread-security">
+                <i class="fa fa-chevron-left"></i> jvm(3)--thread-security
               </a>
             
           </div>
@@ -608,6 +635,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/23/gc-collector/" rel="prev" title="jvm(2)--gc垃圾回收器">
+                jvm(2)--gc垃圾回收器 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -682,7 +713,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -746,7 +777,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -832,7 +867,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存分区"><span class="nav-number">1.</span> <span class="nav-text">内存分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存溢出异常"><span class="nav-number">2.</span> <span class="nav-text">内存溢出异常</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#堆溢出"><span class="nav-number">2.1.</span> <span class="nav-text">堆溢出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#栈溢出"><span class="nav-number">2.2.</span> <span class="nav-text">栈溢出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法区溢出"><span class="nav-number">2.3.</span> <span class="nav-text">方法区溢出</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存分区"><span class="nav-number">1.</span> <span class="nav-text">内存分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存溢出异常"><span class="nav-number">2.</span> <span class="nav-text">内存溢出异常</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#堆溢出"><span class="nav-number">2.1.</span> <span class="nav-text">堆溢出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#栈溢出"><span class="nav-number">2.2.</span> <span class="nav-text">栈溢出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法区溢出"><span class="nav-number">2.3.</span> <span class="nav-text">方法区溢出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#直接内存溢出"><span class="nav-number">2.4.</span> <span class="nav-text">直接内存溢出</span></a></li></ol></li></ol></div>
             
 
           </div>

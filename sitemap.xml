@@ -2,30 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://tru-Xu.github.io/2019/05/11/Http-note/</loc>
+    <loc>http://tru-Xu.github.io/2019/06/23/gc-collector/</loc>
     
-    <lastmod>2019-06-14T15:04:50.215Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tru-Xu.github.io/2019/06/05/memory-management/</loc>
-    
-    <lastmod>2019-06-13T16:04:17.743Z</lastmod>
+    <lastmod>2019-06-23T16:06:14.292Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://tru-Xu.github.io/2019/06/02/thread-security/</loc>
     
-    <lastmod>2019-06-11T13:07:12.910Z</lastmod>
+    <lastmod>2019-06-23T15:46:46.100Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tru-Xu.github.io/2019/06/05/memory-management/</loc>
+    
+    <lastmod>2019-06-23T15:46:10.304Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tru-Xu.github.io/2019/05/11/Http-note/</loc>
+    
+    <lastmod>2019-06-23T15:30:45.606Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://tru-Xu.github.io/2019/05/20/ConcurrentHashMap/</loc>
     
-    <lastmod>2019-06-01T16:20:18.708Z</lastmod>
+    <lastmod>2019-06-23T15:29:24.334Z</lastmod>
     
   </url>
   
