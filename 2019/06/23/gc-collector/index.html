@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://tru-xu.github.io/2019/06/23/gc-collector/eden.jpg">
 <meta property="og:image" content="http://tru-xu.github.io/2019/06/23/gc-collector/mark-compact.jpg">
 <meta property="og:image" content="http://tru-xu.github.io/2019/06/23/gc-collector/gc-collectors.jpg">
-<meta property="og:updated_time" content="2019-06-25T15:37:52.283Z">
+<meta property="og:updated_time" content="2019-06-25T15:56:53.039Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm(2)--gc垃圾回收器">
 <meta name="twitter:description" content="前言：java与C++最大的不同点：内存管理java交由虚拟机管理，无需开发用户自己分配与管理，而C++需要自己分配并释放内存。而java内存的回收是由垃圾收集器完成，接下来我们讨论垃圾回收的几个问题：  回收那些内存？ 何时回收？ 怎么回收？  垃圾回收目标jvm内存分区及管理请移步java内存管理。在各个类型的内存分区中，栈以及本地方法栈中的内存随着线程或者方法的结束而释放，不需要进行额外的管">
@@ -440,7 +440,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-25 23:37:52" itemprop="dateModified" datetime="2019-06-25T23:37:52+08:00">2019-06-25</time>
+                <time title="修改时间：2019-06-25 23:56:53" itemprop="dateModified" datetime="2019-06-25T23:56:53+08:00">2019-06-25</time>
               
             
           </span>
@@ -528,23 +528,23 @@
 <li>虚引用：不影响生存时间，只是做个标记，回收虚引用对象时收到相应通知</li>
 </ul>
 <h3 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h3><p>常用的垃圾回收算法有四种：标记清除算法、标记复制算法、标记整理算法、分代收集。</p>
-<h4 id="标记清除"><a href="#标记清除" class="headerlink" title="标记清除"></a>标记清除</h4><p>标记清除，顾名思义先标记再清除。第一阶段，标记出所有的待回收的对象，第二阶段将标记的对象统一回收。</p>
-<p>缺点：标记、清除效率地下。产生大量空间碎片。</p>
+<h4 id="标记清除"><a href="#标记清除" class="headerlink" title="标记清除"></a>标记清除</h4><p>标记清除，顾名思义先标记再清除。第一阶段，标记出所有的待回收的对象，第二阶段将标记的对象统一清除并回收内存。</p>
+<p>缺点：标记、清除效率低下；产生大量空间碎片。</p>
 <h4 id="标记复制"><a href="#标记复制" class="headerlink" title="标记复制"></a>标记复制</h4><p>适用于新生代，大多对象朝生夕死适用于标记复制算法。一般按照Eden：Survivor：Survivor为8：1：1进行分配，如图1所示：</p>
 <p><img src="/2019/06/23/gc-collector/eden.jpg" alt="1561385869166"></p>
-<p><center>图 1 堆内新生代内存分配</center><br>新生代的对象存活率不超过10%，例如第一次将Eden+S1分配给新生代使用，Minor GC时，存活的对象不超过10%，此时将所有存活对象复制到S2中，然后清理Eden、S1的内存。之后将Eden+S2分配给新生代使用，当再次进行Minor GC 时，将Eden + S2中存活的对象复制到S1中，并清空Eden、S2的内存。以此往复使用，保证只有一块Survivor的空间是空闲的，利用率可达90%。</p>
-<h4 id="标记整理"><a href="#标记整理" class="headerlink" title="标记整理"></a>标记整理</h4><p>堆内存中老年代对象的存活率比较高，可能出现大部分对象在GC时都还存活的情况，故此时标记复制算法已经不能满足需求。根据此场景，有一种新的垃圾回收算法产生：标记整理算法。</p>
+<p><center>图 1 堆内新生代内存分配</center><br>新生代的对象存活率不超过10%，例如第一次将Eden+S1分配给新生代使用，Minor GC时，存活的对象不超过10%，此时将所有存活对象复制到S2中，然后清理Eden、S1的内存。之后将Eden+S2分配给新生代使用，当再次进行Minor GC 时，将Eden + S2中存活的对象复制到S1中，并清空Eden、S2的内存。以此反复使用，保证只有一块Survivor的空间是空闲的，利用率可达90%。</p>
+<h4 id="标记整理"><a href="#标记整理" class="headerlink" title="标记整理"></a>标记整理</h4><p>堆内存中老年代对象的存活率比较高，可能出现垃圾回收时大部分对象都还存活的情况，故此时标记复制算法已经不能满足需求。根据此场景，有一种新的垃圾回收算法可以解决此问题：标记整理算法。</p>
 <p>标记整理第一步与之前相同，都是先标记，不过第二步是整理，将存活的对象向一端进行移动，并清理边界以外的内存。如下图2所示，黑色为可回收内存，黄色为存活对象，白色为未使用对象。</p>
 <p><img src="/2019/06/23/gc-collector/mark-compact.jpg" width="60%"></p>
 <p><center>图2 标记整理算法</center></p>
-<h4 id="分代收集"><a href="#分代收集" class="headerlink" title="分代收集"></a>分代收集</h4><p>将存活对象分为老年代和新生代，不同年代对象采用不同的垃圾回收算法。新生代每次垃圾回收时，大量对象死去，采用标记复制算法，老年代对象的存活率很高，故采用标记清除或者标记整理算法。</p>
+<h4 id="分代收集"><a href="#分代收集" class="headerlink" title="分代收集"></a>分代收集</h4><p>将存活对象分为老年代和新生代，不同年代对象采用不同的垃圾回收算法。新生代每次垃圾回收时，大量对象死去，采用标记复制算法；老年代对象的存活率很高，采用标记清除或者标记整理算法。</p>
 <h3 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h3><p>新生代Serial、ParNew、Parallel Scavenge，老年代Serial Old、CMS、Parallel Old,即可应用与老年代也可应用与新生代的垃圾回收器G1 。各个垃圾回收器之间的关系如图3所示：</p>
 <p><img src="/2019/06/23/gc-collector/gc-collectors.jpg" width="60%"></p>
 <p><center>图 3 垃圾回收器</center></p>
-<h4 id="Serial收集器"><a href="#Serial收集器" class="headerlink" title="Serial收集器"></a>Serial收集器</h4><p>单线程串行收集器，垃圾回收时需要STW，采用标记复制算法暂停所有用户进程。Serial收集器的优点是简单高效、没有线程交互的开销，当回收的内存比较小时，停顿时间较少可以接受，故在某些Client模式下的虚拟机比较适合。缺点也很明显，垃圾回收时需要暂停用户线程，体验不好。</p>
-<h4 id="ParNew收集器"><a href="#ParNew收集器" class="headerlink" title="ParNew收集器"></a>ParNew收集器</h4><p>新生代收集器，采用多线程和标记复制算法。ParNew收集器是Serial收集器的多线程版本，在对新生代垃圾回收时也需要STW，暂停所有用户线程，然后多线程的进行垃圾回收，其他环节与Serial类似。当只有一个CPU时，性能不如Serial收集器，需要线程切换的开销，当存在多个CPU时，该收集器性能要优于Serial收集器。</p>
-<h4 id="Parallel-Scavenge收集器"><a href="#Parallel-Scavenge收集器" class="headerlink" title="Parallel Scavenge收集器"></a>Parallel Scavenge收集器</h4><p>新生代收集器，采用多线程和标记复制算法。特点：可控制的吞吐量。吞吐量 = 运行用户代码时间 /（运行用户代码时间 + 垃圾回收时间），通过-XX:GCTimeRatio参数控制吞吐量，当参数为19时，用户程序时间：垃圾回收时间是 19，则吞吐量为1/20 = 5% 。</p>
-<h4 id="Serial-Old收集器"><a href="#Serial-Old收集器" class="headerlink" title="Serial Old收集器"></a>Serial Old收集器</h4><p>老年代收集器，采用单线程和标记整理算法，单线程STW暂停所有用户线程，然后回收内存</p>
+<h4 id="Serial收集器"><a href="#Serial收集器" class="headerlink" title="Serial收集器"></a>Serial收集器</h4><p>单线程串行收集器，采用标记复制算法。垃圾回收时需要STW，暂停所有用户进程。Serial收集器的优点是简单高效、没有线程交互的开销，当回收的内存比较小时，停顿时间较少可以接受，故在某些Client模式下的虚拟机比较适合。缺点也很明显，垃圾回收时需要暂停用户线程，体验不好。</p>
+<h4 id="ParNew收集器"><a href="#ParNew收集器" class="headerlink" title="ParNew收集器"></a>ParNew收集器</h4><p>新生代收集器，采用多线程和标记复制算法。ParNew收集器是Serial收集器的多线程版本，在对新生代垃圾回收时也需要STW，暂停所有用户线程，然后多线程并行的进行垃圾回收，其他环节与Serial类似。当只有一个CPU时，需要线程切换的开销，性能反而不如Serial收集器，当存在多个CPU时，该收集器性能要优于Serial收集器。</p>
+<h4 id="Parallel-Scavenge收集器"><a href="#Parallel-Scavenge收集器" class="headerlink" title="Parallel Scavenge收集器"></a>Parallel Scavenge收集器</h4><p>新生代收集器，采用多线程和标记复制算法。特点：吞吐量可控制。吞吐量 = 运行用户代码时间 /（运行用户代码时间 + 垃圾回收时间），通过-XX:GCTimeRatio参数控制吞吐量，当参数为19时，用户程序时间/垃圾回收时间 = 19，则吞吐量为19/20 = 95% 。</p>
+<h4 id="Serial-Old收集器"><a href="#Serial-Old收集器" class="headerlink" title="Serial Old收集器"></a>Serial Old收集器</h4><p>老年代收集器，采用单线程和标记整理算法。垃圾回收时STW，暂停所有用户线程，然后回收内存。</p>
 <h4 id="Parallel-Old收集器"><a href="#Parallel-Old收集器" class="headerlink" title="Parallel Old收集器"></a>Parallel Old收集器</h4><p>老年代收集器，采用多线程和标记整理算法，与Parallel Scavenge一起达到控制吞吐量的效果。在注重吞吐量以及CPU资源的场景可以采用Parallel Scavenge和Parallel Old一起进行垃圾回收。</p>
 <h4 id="CMS收集器"><a href="#CMS收集器" class="headerlink" title="CMS收集器"></a>CMS收集器</h4><p>多线程并发标记清除收集器，特点是最短回收停顿时间可控。总共分四个阶段：</p>
 <ul>
