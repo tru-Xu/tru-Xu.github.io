@@ -2,7 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http://tru-Xu.github.io/2019/06/23/gc-collector/</loc>
-    <lastmod>2019-06-25</lastmod>
+    <lastmod>2019-06-27</lastmod>
+  </url>  <url>
+    <loc>http://tru-Xu.github.io/2019/05/10/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E8%B8%A9%E5%9D%91/</loc>
+    <lastmod>2019-06-26</lastmod>
   </url>  <url>
     <loc>http://tru-Xu.github.io/2019/06/02/thread-security/</loc>
     <lastmod>2019-06-23</lastmod>
@@ -15,9 +18,6 @@
   </url>  <url>
     <loc>http://tru-Xu.github.io/2019/05/20/ConcurrentHashMap/</loc>
     <lastmod>2019-06-23</lastmod>
-  </url>  <url>
-    <loc>http://tru-Xu.github.io/2019/05/10/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E8%B8%A9%E5%9D%91/</loc>
-    <lastmod>2019-05-20</lastmod>
   </url>  <url>
     <loc>http://tru-Xu.github.io/2019/05/15/equals%E4%B8%8EhashCode/</loc>
     <lastmod>2019-05-20</lastmod>
