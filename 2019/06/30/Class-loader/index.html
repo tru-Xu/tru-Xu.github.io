@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.1',
+    sidebar: {"position":"left","width":220,"display":"post","offset":24,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: true,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: 'IS4FR5Q0X7',
+      apiKey: '072a36339547208ac0439383d1c68905',
+      indexName: 'blog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言用户代码经过编译生成符合jvm规范的CLASS文件，将本地机器码转化为字节码。之后在虚拟机启动程序时将CLASS文件中的类加载带到内存当中，供程序使用。本博客结合周志明先生的《深入理解Java虚拟机》对这些知识点进行梳理验证。 类加载时机类的生命周期包括：加载、验证、准备、解析、初始化、使用、卸载，其中验证、准备解析统称为链接。发生顺序如图1所示。  图1 类生命周期  类的解析阶段开始时间是">
+<meta name="keywords" content="class load,jvm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jvm(3)--类加载">
+<meta property="og:url" content="http://tru-Xu.github.io/2019/06/30/Class-loader/index.html">
+<meta property="og:site_name" content="Home page">
+<meta property="og:description" content="前言用户代码经过编译生成符合jvm规范的CLASS文件，将本地机器码转化为字节码。之后在虚拟机启动程序时将CLASS文件中的类加载带到内存当中，供程序使用。本博客结合周志明先生的《深入理解Java虚拟机》对这些知识点进行梳理验证。 类加载时机类的生命周期包括：加载、验证、准备、解析、初始化、使用、卸载，其中验证、准备解析统称为链接。发生顺序如图1所示。  图1 类生命周期  类的解析阶段开始时间是">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://tru-xu.github.io/2019/06/30/Class-loader/类加载顺序.jpg">
+<meta property="og:image" content="http://tru-xu.github.io/2019/06/30/Class-loader/类加载器.jpg">
+<meta property="og:updated_time" content="2019-06-30T14:18:29.796Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jvm(3)--类加载">
+<meta name="twitter:description" content="前言用户代码经过编译生成符合jvm规范的CLASS文件，将本地机器码转化为字节码。之后在虚拟机启动程序时将CLASS文件中的类加载带到内存当中，供程序使用。本博客结合周志明先生的《深入理解Java虚拟机》对这些知识点进行梳理验证。 类加载时机类的生命周期包括：加载、验证、准备、解析、初始化、使用、卸载，其中验证、准备解析统称为链接。发生顺序如图1所示。  图1 类生命周期  类的解析阶段开始时间是">
+<meta name="twitter:image" content="http://tru-xu.github.io/2019/06/30/Class-loader/类加载顺序.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://tru-Xu.github.io/2019/06/30/Class-loader/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>jvm(3)--类加载 | Home page</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Home page</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tru-Xu.github.io/2019/06/30/Class-loader/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tru-Xu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Home page">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">jvm(3)--类加载
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-30 22:15:35 / 修改时间：22:18:29" itemprop="dateCreated datePublished" datetime="2019-06-30T22:15:35+08:00">2019-06-30</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>用户代码经过编译生成符合jvm规范的CLASS文件，将本地机器码转化为字节码。之后在虚拟机启动程序时将CLASS文件中的类加载带到内存当中，供程序使用。本博客结合周志明先生的《深入理解Java虚拟机》对这些知识点进行梳理验证。</p>
+<h3 id="类加载时机"><a href="#类加载时机" class="headerlink" title="类加载时机"></a>类加载时机</h3><p>类的生命周期包括：加载、验证、准备、解析、初始化、使用、卸载，其中验证、准备解析统称为链接。发生顺序如图1所示。</p>
+<p><img src="/2019/06/30/Class-loader/类加载顺序.jpg" width="60%/"></p>
+<center>图1 类生命周期</center>
+
+<p>类的解析阶段开始时间是不确定的，可能在准备之后发生也可能在初始化之后发生，并且各个阶段是交叉进行的。类加载的时机包含5类场景：</p>
+<ol>
+<li>使用new、getstatic、putstatic、invokestatic字节码指令时，若类未初始化，则需要对类进行加载完成类的初始化。对应场景创建新的对象、读取类的静态字段、设置类的静态字段、调用类的静态方法。</li>
+<li>reflect包方法对类进行反射调用且类未初始化时。</li>
+<li>初始化子类，父类未初始化时。</li>
+<li>虚拟机启动，用户指定执行的类（包含main（）方法的类）。</li>
+<li>MethodHandle实例最后解析结果是REF_getstatic、REF_putstatic、REF_invokestatic时。</li>
+</ol>
+<p>以上5类情况需要对类进行初始化，并且只有这5种情况能够触发类的初始化。</p>
+<p>被动引用不会引起初始化的情况：</p>
+<ul>
+<li>子类引用父类的静态变量（子类中没有同名的静态变量）不会初始化子类。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SuperClass</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"SuperClass init"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> value = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(SubClass.value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SubClass</span>  <span class="keyword">extends</span>  <span class="title">SuperClass</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//public static int value = 2;</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"SubClass init"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"E:\Program Files\Java\jdk1.8.0_91\bin\java"</span> <span class="string">"-javaagent:D:\Program Files\JetBrains\IntelliJ IDEA 2017.3.4\lib\idea_rt.jar=51870:D:\Program Files\JetBrains\IntelliJ IDEA 2017.3.4\bin"</span> -Dfile.encoding=UTF-8 -classpath ……</span><br><span class="line">SuperClass init</span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">Process finished with <span class="built_in">exit</span> code 0</span><br></pre></td></tr></table></figure>
+<p>结果只包含父类的初始化，验证时建议main函数单独放在另一个类中，因为main函数所在的类一定会被初始化，不利于验证被动引用的场景。</p>
+<ul>
+<li>数组不会初始化类</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NotInitlization</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//System.out.println(SubClass.value);</span></span><br><span class="line">        SubClass[] sca = <span class="keyword">new</span> SubClass[<span class="number">10</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"E:\Program Files\Java\jdk1.8.0_91\bin\java"</span> ……</span><br><span class="line">Process finished with <span class="built_in">exit</span> code 0</span><br></pre></td></tr></table></figure>
+<p>并没有引起类的初始化操作。</p>
+<ul>
+<li>常量不会引起类初始化</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConstClass</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String CONST=<span class="string">"const"</span>;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"ConstClass init"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NotInitlization</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(ConstClass.CONST);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"E:\Program Files\Java\jdk1.8.0_91\bin\java"</span> ……</span><br><span class="line">const</span><br><span class="line"></span><br><span class="line">Process finished with <span class="built_in">exit</span> code 0</span><br></pre></td></tr></table></figure>
+<p>编译阶段已经将常量进入常量池（方法区内），NotInitlization类中的常量池中包含CONST的引用，而没有ConstClass类的引用。故常量池中常量的引用不会引起类的初始化。</p>
+<h3 id="类加载过程"><a href="#类加载过程" class="headerlink" title="类加载过程"></a>类加载过程</h3><p>类从class文件加载到内存，主要包括上面的加载、验证、准备、解析、初始化等几步，之后就是对类的使用和卸载，这两步时类已经进入内存。</p>
+<h4 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h4><p>加载主要完成3件事：</p>
+<ol>
+<li>通过类的全限定名来获取定义此类的二进制字节流。</li>
+<li>将这个字节流所代表的静态存储结构转化为方法区的运行时数据结构。</li>
+<li>在内存中生成一个代表这个类的java.lang.Class对象，作为方法区这个类的各种数据的访问入口。</li>
+</ol>
+<p>类全限定名称指包含包名的类名称，以ConstantClass类的Class文件为例，Class文件时二进制文件，我们可以通过命令行观察类文件结构。执行javap -verbose命令查看文件字节码内容如下所示:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ javap -verbose ConstClass</span><br><span class="line">  Compiled from <span class="string">"ConstClass.java"</span></span><br><span class="line">public class classload.ConstClass</span><br><span class="line">  minor version: 0</span><br><span class="line">  major version: 52</span><br><span class="line">  flags: ACC_PUBLIC, ACC_SUPER</span><br><span class="line">Constant pool:</span><br><span class="line">   <span class="comment">#1 = Methodref          #6.#21         // java/lang/Object."&lt;init&gt;":()V</span></span><br><span class="line">   <span class="comment">#2 = Fieldref           #22.#23        // java/lang/System.out:Ljava/io/PrintStream;</span></span><br><span class="line">   <span class="comment">#3 = String             #24            // ConstClass init</span></span><br><span class="line">   <span class="comment">#4 = Methodref          #25.#26        // java/io/PrintStream.println:(Ljava/lang/String;)V</span></span><br><span class="line">   <span class="comment">#5 = Class              #27            // classload/ConstClass</span></span><br><span class="line">   <span class="comment">#6 = Class              #28            // java/lang/Object</span></span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>classload/ConstClass就是类的全限定名称，jvm通过类全限定名称将获取类的二进制字节流。二进制字节流中包含类变量、名称、字段名、方法名等相关的静态存储结构，按照虚拟机的方法区规范，将类的静态存储结构转换为方法区的运行时数据结构。之后在内存中实例化一个java.lang.Class对象（在方法区中）代表ConstClass类，之后将这个Class对象作为访问方法区中ConstClass类的一个接口。</p>
+<h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><p>类加载到内存之后，首先需要进行验证方可继续使用。验证内容只要包含以下几步：</p>
+<ul>
+<li>文件格式验证： 对比Class文件格式要求，验证字节流是否满足需求</li>
+<li>元数据验证：是否有Object父类；是否继承final类；子类字段、方法是否矛盾等等</li>
+<li>字节码验证：保证操作栈指令能与字节码合作；指令不会跳到方法意外；指令有效</li>
+<li>符号引用验证：符号引用的全限定名是否有效；类、字段、方法访问性是否合法</li>
+</ul>
+<h4 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h4><p>为类变量分配内存以及设置类变量的初始值。首先，什么是类变量？个人认为一个类中变量主要包含三大类：类变量、实例变量、常量。来看下面的类定义</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestVariable</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> sv = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> v = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> cv = <span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码中，v是实例变量、sv是类变量、cv是常量，其中v实例变量只有在类拥有实例对象时，才可通过实例对象访问，不能直接通过类对象进行访问。因为在类拥有实例对象时，实例对象分配在java堆上，此时变量v才被分配内存，并且位于实例对象的内存空间内。对着实例对象内存的回收，实例变量v的内存也被回收，将无法访问。</p>
+<p>而sv、cv在类加载完后，就已经在方法区分配内存，不需要类实例对象即可直接进行访问。三种变量的访问方式如下代码所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mian</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    TestVariable testV = <span class="keyword">new</span> TestVariable();</span><br><span class="line">    <span class="keyword">int</span> a = testV.v;</span><br><span class="line">    <span class="keyword">int</span> b = TestVariable.sv;</span><br><span class="line">    <span class="keyword">int</span> c = TestVariable.cv;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>准备阶段在加载阶段之后，类变量（被static修饰的变量）已在方法区中分配内存故可以访问，此时可对类变量设置初始值。设置初始值时，大多数默认情况都是零值，布尔型为false、引用类型为null。除此之外常量初始值会初始化为代码中指定的值，例如上面代码中，准备阶段时，sv被设为0，cv被设为3。</p>
+<h4 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h4><p>解析阶段的任务是将常量池内的符号引用替换为直接引用。</p>
+<ul>
+<li>符号引用：用一组符号描述所引用的目标，能够无歧义的定位到目标。包含三类:<ul>
+<li>类和接口的全限定名</li>
+<li>字段的名称和描述符</li>
+<li>方法的名称和描述符</li>
+</ul>
+</li>
+<li>直接引用：指向目标的指针、相对便宜量或者是一个能间接定位到目标的句柄。直接引用和内存直接相关，能够找到直接引用那么内存中一定存在直接引用的目标。解析时机：<ul>
+<li>类加载时</li>
+<li>被字节码指令使用时</li>
+</ul>
+</li>
+</ul>
+<p>解析对象主要包括：</p>
+<ol>
+<li>类或接口</li>
+<li>字段</li>
+<li>类方法</li>
+<li>接口方法</li>
+</ol>
+<h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>初始化阶段是执行类构造器<clinit>()方法的过程。<clinit>()方法是由编译器自动收集类变量的赋值动作和静态语句块中的语句合并产生的。在初始化阶段，这些用户代码中类变量以及静态代码块中的操作才被真正执行。</clinit></clinit></p>
+<h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h3><p>jvm加载类时采用双亲委派模型对类进行加载，那什么是双亲委派模型？为什么要使用双亲委派模型呢？</p>
+<h4 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h4><p>类加载器从上到下包括：</p>
+<ul>
+<li>启动类加载器（Bootstrap ClassLoader）</li>
+<li>扩展类加载器（Extension ClassLoader）</li>
+<li>应用程序类加载器（Application ClassLoader）</li>
+</ul>
+<p>类加载器双亲委派模型如图2所示，除顶层启动类加载器外，其余的类加载器都有父类加载器，父子关系通过组合关系来复用父加载器的代码。双亲委派模型是指：当一个类加载器收到类加载请求时，首先不会自己尝试加载这个类，而是把这个请求委派给父加载器去完成，每一个层次的类加载器都是这样，因此所有的加载请求最终都应该传到启动类加载器中，只有当父类加载器无法完成这个加载请求时，子加载器才会去加载。</p>
+<p><img src="/2019/06/30/Class-loader/类加载器.jpg" alt="1561887678364"></p>
+<center>图2 类加载器双亲委派模型</center>
+
+<p>简而言之，有类加载请求就扔给父类，请求层层上传，当父类无法加载时，子类再尝试去加载。那为什么要这样做呢？为什么不能直接让子类去加载呢？加下来我们看这个例子，利用自定义的类加载器对某个用户类进行加载。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserClassLoader</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        ClassLoader myLoader = <span class="keyword">new</span> ClassLoader() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> Class&lt;?&gt; loadClass(String name) <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span>(name.startsWith(<span class="string">"java"</span>))&#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="keyword">super</span>.loadClass(name);</span><br><span class="line">                    &#125;</span><br><span class="line">                    String fileName = name.substring(name.lastIndexOf(<span class="string">"."</span>) + <span class="number">1</span>) + <span class="string">".class"</span>;</span><br><span class="line">                    InputStream is = getClass().getResourceAsStream(fileName);</span><br><span class="line">                    <span class="keyword">if</span>(is == <span class="keyword">null</span>) &#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="keyword">super</span>.loadClass(fileName);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[is.available()];</span><br><span class="line">                    is.read(b);</span><br><span class="line">                    <span class="keyword">return</span> defineClass(name, b, <span class="number">0</span>, b.length);</span><br><span class="line">                &#125;<span class="keyword">catch</span> (IOException e)&#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> ClassNotFoundException(name);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        Object obj = myLoader.loadClass(<span class="string">"classload.UserClassLoader"</span>).newInstance();</span><br><span class="line">        System.out.println(obj.getClass());</span><br><span class="line">        System.out.println(obj <span class="keyword">instanceof</span> classload.UserClassLoader);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"E:\Program Files\Java\jdk1.8.0_91\bin\java"</span> ……</span><br><span class="line">class classload.UserClassLoader</span><br><span class="line"><span class="literal">false</span></span><br><span class="line"></span><br><span class="line">Process finished with <span class="built_in">exit</span> code 0</span><br></pre></td></tr></table></figure>
+<p>为什么返回结果为false呢？obj对象确实是classload.UserClassLoader类的对象，但唯一不同的是这个是我们自定义的类加载器创建的对象。而结果为false，说明虚拟机中存在了两个UserClassLoader类，一个是自定义类加载器加载的类，另一个是启动类加载器加载的类。虽然都来自同一个class文件，但是在虚拟机中却是两个类，因此可得出结论：加载类所用的类加载器不同时，则在加载到内存中的类也不是同一个类。</p>
+<p>基于上述情况，考虑如下情形，用户利用自定义类加载器对java的基础类String、Object类进行加载，那么在内存中会存在多个Object、String类，我们使用这些类时必然会带来各种各样的问题。为解决此问题，双亲委派模型排上用场。在双亲委派模型中，所有的类都会被启动类加载器进行处理，当启动类加载器无法加载时再交由子类加载器进行处理，这样可以保证在各种类加载器的环境中，Object、String等类都是同一个类。</p>
+<h4 id="破坏双亲委派模型"><a href="#破坏双亲委派模型" class="headerlink" title="破坏双亲委派模型"></a>破坏双亲委派模型</h4><ul>
+<li>第一次被破坏：历史原因，jdk1.2之前双亲委派模型没有被引入。</li>
+</ul>
+<p>类加载器的loadClass()方法可以被重写，但双亲委派模型就是在loadClass()中实现的，故用户复写loadClass()方法会破坏双亲委派模型。</p>
+<p>为了即兼容历史的版本又可以支持双亲委派模型，jdk在loadClass()中加入findClass()方法。用户可以将自己的类加载逻辑写道findClass()方法中，loadClass()方法加载失败就会调用findClass()方法完成加载，这样可以保证类加载器符合双亲委派模型。</p>
+<ul>
+<li>第二次被破坏：基础类回调用户代码，需要父类加载器请求子类加载器完成类加载动作。</li>
+</ul>
+<p>解决方法：线程上下文类加载器（Thread Context ClassLoader）。</p>
+<ul>
+<li>第三次被破坏：模块化热部署，为实现热部署，每个程序模块（Bundle）都有一个自己的类加载器。此时类加载器不再时双亲委派模型而是复杂的网状结构。</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="tru-Xu 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="tru-Xu 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/class-load/" rel="tag"># class load</a>
+          
+            <a href="/tags/jvm/" rel="tag"># jvm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/23/gc-collector/" rel="next" title="jvm(2)--gc垃圾回收器">
+                <i class="fa fa-chevron-left"></i> jvm(2)--gc垃圾回收器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="gitalk-container">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="tru-Xu">
+            
+              <p class="site-author-name" itemprop="name">tru-Xu</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/tru-Xu" title="GitHub &rarr; https://github.com/tru-Xu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:1967064372@qq.com" title="E-Mail &rarr; mailto:1967064372@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://leetcode.com/" title="https://leetcode.com/" rel="noopener" target="_blank">leetcode</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.nowcoder.com/" title="https://www.nowcoder.com/" rel="noopener" target="_blank">newcoder</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.coursera.org" title="https://www.coursera.org" rel="noopener" target="_blank">coursera</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类加载时机"><span class="nav-number">2.</span> <span class="nav-text">类加载时机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类加载过程"><span class="nav-number">3.</span> <span class="nav-text">类加载过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#加载"><span class="nav-number">3.1.</span> <span class="nav-text">加载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#验证"><span class="nav-number">3.2.</span> <span class="nav-text">验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#准备"><span class="nav-number">3.3.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解析"><span class="nav-number">3.4.</span> <span class="nav-text">解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化"><span class="nav-number">3.5.</span> <span class="nav-text">初始化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类加载器"><span class="nav-number">4.</span> <span class="nav-text">类加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#双亲委派模型"><span class="nav-number">4.1.</span> <span class="nav-text">双亲委派模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#破坏双亲委派模型"><span class="nav-number">4.2.</span> <span class="nav-text">破坏双亲委派模型</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tru-Xu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.1</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+
+
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+<script>
+  var gitalk = new Gitalk({
+    clientID: '8618f691fc27b30b2ea5',
+    clientSecret: '603f5d44e38772f79e5819be17510676c12d0cb0',
+    repo: 'blog-talk',
+    owner: 'tru-Xu',
+    admin: ['tru-Xu'],
+    id: md5(location.pathname),
+    
+      language: 'zh-CN',
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
+</script>
+
+  
+
+
+  
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/algolia-search.js?v=7.1.1"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
