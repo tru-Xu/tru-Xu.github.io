@@ -96,25 +96,18 @@
 
 
 
-  <meta name="description" content="前言：现有web请求中大都基于HTTP协议。了解HTTP协议需要具备计算机网络基础知识，笔者参考网上评价最高的《图解HTTP》这本书对HTTP协议进行系统的学习。主要介绍HTTP协议、状态码、代理、网络安全HTTPS。 计算机基础 网络分层主要分为三种：   tcp/ip四层 五层协议 OSI七层  其中常用的时tcp/ip四层分层的方式，其他两种用的比较少。三种分层方法如下图1所示：  图1 网">
-<meta name="keywords" content="http">
+  <meta name="description" content="前言反射技术是非常关键的一项技术，在动态代理、spring IOC容器、AOP中广泛应用。某些场景下，在类编译时并不知道类的确切类型，只有在运行时才可确定其类型。 反射简介及使用反射指运行时获取类的相关信息，包括类的字段、方法构造器等信息。有了这些信息我们可以做很多事情，例如类实例对象的创建；方法名称、参数的获取；字段名称获取等。反射在运行时获取这些信息，需要在运行时打开和检查Class文件。 类">
+<meta name="keywords" content="reflection">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HTTP协议简介">
-<meta property="og:url" content="http://tru-Xu.github.io/2019/05/11/Http-note/index.html">
+<meta property="og:title" content="反射">
+<meta property="og:url" content="http://tru-Xu.github.io/2019/06/30/reflection/index.html">
 <meta property="og:site_name" content="Home page">
-<meta property="og:description" content="前言：现有web请求中大都基于HTTP协议。了解HTTP协议需要具备计算机网络基础知识，笔者参考网上评价最高的《图解HTTP》这本书对HTTP协议进行系统的学习。主要介绍HTTP协议、状态码、代理、网络安全HTTPS。 计算机基础 网络分层主要分为三种：   tcp/ip四层 五层协议 OSI七层  其中常用的时tcp/ip四层分层的方式，其他两种用的比较少。三种分层方法如下图1所示：  图1 网">
+<meta property="og:description" content="前言反射技术是非常关键的一项技术，在动态代理、spring IOC容器、AOP中广泛应用。某些场景下，在类编译时并不知道类的确切类型，只有在运行时才可确定其类型。 反射简介及使用反射指运行时获取类的相关信息，包括类的字段、方法构造器等信息。有了这些信息我们可以做很多事情，例如类实例对象的创建；方法名称、参数的获取；字段名称获取等。反射在运行时获取这些信息，需要在运行时打开和检查Class文件。 类">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://tru-xu.github.io/2019/05/11/Http-note/网络分层.png">
-<meta property="og:image" content="http://tru-xu.github.io/2019/05/11/Http-note/中间设备.png">
-<meta property="og:image" content="http://tru-xu.github.io/2019/05/11/Http-note/Http传输.png">
-<meta property="og:image" content="http://tru-xu.github.io/2019/05/11/Http-note/wireshark-capture.PNG">
-<meta property="og:image" content="http://tru-xu.github.io/2019/05/11/Http-note/各层头部.png">
-<meta property="og:image" content="http://tru-xu.github.io/2019/05/11/Http-note/proxy.jpg">
-<meta property="og:updated_time" content="2019-06-30T14:49:52.608Z">
+<meta property="og:updated_time" content="2019-06-30T16:06:31.912Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HTTP协议简介">
-<meta name="twitter:description" content="前言：现有web请求中大都基于HTTP协议。了解HTTP协议需要具备计算机网络基础知识，笔者参考网上评价最高的《图解HTTP》这本书对HTTP协议进行系统的学习。主要介绍HTTP协议、状态码、代理、网络安全HTTPS。 计算机基础 网络分层主要分为三种：   tcp/ip四层 五层协议 OSI七层  其中常用的时tcp/ip四层分层的方式，其他两种用的比较少。三种分层方法如下图1所示：  图1 网">
-<meta name="twitter:image" content="http://tru-xu.github.io/2019/05/11/Http-note/网络分层.png">
+<meta name="twitter:title" content="反射">
+<meta name="twitter:description" content="前言反射技术是非常关键的一项技术，在动态代理、spring IOC容器、AOP中广泛应用。某些场景下，在类编译时并不知道类的确切类型，只有在运行时才可确定其类型。 反射简介及使用反射指运行时获取类的相关信息，包括类的字段、方法构造器等信息。有了这些信息我们可以做很多事情，例如类实例对象的创建；方法名称、参数的获取；字段名称获取等。反射在运行时获取这些信息，需要在运行时打开和检查Class文件。 类">
 
 
 
@@ -122,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="http://tru-Xu.github.io/2019/05/11/Http-note/">
+  <link rel="canonical" href="http://tru-Xu.github.io/2019/06/30/reflection/">
 
 
 
@@ -132,7 +125,7 @@
   };
 </script>
 
-  <title>HTTP协议简介 | Home page</title>
+  <title>反射 | Home page</title>
   
 
 
@@ -383,7 +376,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tru-Xu.github.io/2019/05/11/Http-note/">
+    <link itemprop="mainEntityOfPage" href="http://tru-Xu.github.io/2019/06/30/reflection/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tru-Xu">
@@ -400,7 +393,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">HTTP协议简介
+          <h1 class="post-title" itemprop="name headline">反射
 
               
             
@@ -426,7 +419,7 @@
                 
               
 
-              <time title="创建时间：2019-05-11 23:44:58" itemprop="dateCreated datePublished" datetime="2019-05-11T23:44:58+08:00">2019-05-11</time>
+              <time title="创建时间：2019-06-30 22:57:18" itemprop="dateCreated datePublished" datetime="2019-06-30T22:57:18+08:00">2019-06-30</time>
             
 
             
@@ -443,7 +436,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-30 22:49:52" itemprop="dateModified" datetime="2019-06-30T22:49:52+08:00">2019-06-30</time>
+                <time title="修改时间：2019-07-01 00:06:31" itemprop="dateModified" datetime="2019-07-01T00:06:31+08:00">2019-07-01</time>
               
             
           </span>
@@ -460,7 +453,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/network/" itemprop="url" rel="index"><span itemprop="name">network</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java-base/" itemprop="url" rel="index"><span itemprop="name">java-base</span></a></span>
 
                 
                 
@@ -502,112 +495,14 @@
       
 
       
-        <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>现有web请求中大都基于HTTP协议。了解HTTP协议需要具备计算机网络基础知识，笔者参考网上评价最高的《图解HTTP》这本书对HTTP协议进行系统的学习。主要介绍HTTP协议、状态码、代理、网络安全HTTPS。</p>
-<h2 id="计算机基础"><a href="#计算机基础" class="headerlink" title="计算机基础"></a>计算机基础</h2><ol>
-<li>网络分层主要分为三种：</li>
-</ol>
-<ul>
-<li>tcp/ip四层</li>
-<li>五层协议</li>
-<li>OSI七层</li>
-</ul>
-<p>其中常用的时tcp/ip四层分层的方式，其他两种用的比较少。三种分层方法如下图1所示：</p>
-<p><img src="/2019/05/11/Http-note/网络分层.png" width="50%" height="50%"></p>
-<p><center>图1 网络的三种分层方式</center><br>网络互联时需要一些中间设备包括网关、路由器、网桥、转发器等，各个中间设备与各个层次之间的对应关系如下图2（参考《计算机网络（谢希仁）P115》）所示：</p>
-<p><img src="/2019/05/11/Http-note/中间设备.png" width="50%" height="50%"></p>
-<p><center>图2 中间设备</center></p>
-<ol start="2">
-<li>TCP与UDP</li>
-</ol>
-<p>传输层最主要的两个协议TCP与UDP，这里不做展开。首先介绍着两个协议包含的应用层协议簇：</p>
-<p>TCP:  HTTP（超文本传输协议）、FTP（文件传输协议）、SMTP（简单邮件传送协议）、TELENT（远程终端协议）等</p>
-<p>UDP:  DNS、TFTP、RIP、DHCP、SNMP、NFS、IGMP等。</p>
-<ol start="3">
-<li>HTTP协议数据传输过程</li>
-</ol>
-<p>HTTP是基于TCP/IP协议的，虽然TCP是面向连接的可靠地传输层协议， 但是HTTP协议本身是无状态，且无连接的（HTTP交换报文之前不需要先建立HTTP连接）。数据在各个层次之间传输时，发送端每经过一层都需要进行封装，添加相应的首部。原始HTTP报文经过传输层添加TCP报文首部，经过网络层添加IP首部经过链路层时添加以太网首部。反之接收端在解析报文时，首先从链路层取出包含以太网首部的帧数据，然后经过网络层去掉以太网首部，经过传输层去掉IP首部，到应用层去掉TCP首部最后只留下HTTP报文。如图3 所示：</p>
-<p><img src="/2019/05/11/Http-note/Http传输.png"></p>
-<p><center>图3 HTTP协议通讯</center><br>实例分析：在浏览器中请求一个网页，利用wireshark抓包软件对HTTP报文进行抓包分析。抓包结果如图4所示，可以看到有两个HTTP协议的连接，查看source、destination可发现这是一次客户端到服务器的请求以及服务器到客户端的一次响应。<img src="/2019/05/11/Http-note/wireshark-capture.PNG" alt></p>
-<p><center>图4 wireshark抓包结果</center><br>点看其中一个HTTP请求，链路层每一帧的数据结构如图5所示，从左到右从上到下分别是以太网（Ethernet II）头部、IP头部、TCP头部、HTTP报文。</p>
-<p><img src="/2019/05/11/Http-note/各层头部.png"></p>
-<p><center>图 5 HTTP请求报文结构</center></p>
-<ol start="4">
-<li>IP、TCP、DNS与HTTP</li>
-</ol>
-<ul>
-<li>IP协议中比较重要的ARP（Address Resoletion Protocol）协议，负责解析IP地址与机器MAC地址之间的关系。链路层只认MAC地址，网络层ARP协议中，规定了IP地址与MAC之间的映射关系，由于每台机器的MAC地址是唯一的，通过IP地址可以找到对应MAC地址的机器。</li>
-</ul>
-<p>TCP协议通过三次握手建立端到端的连接，并将大数据分割成一个个数据包进行传输。</p>
-<p>DNS域名系统负责IP地址与域名之间的解析。机器与机器之间交流时可以互相识别IP地址，但这对于人来说很不友好，比如访问百度时直接输入：<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> ，而不是<a href="http://www.IPXXXX.com" target="_blank" rel="noopener">www.IPXXXX.com</a> 。 为方便人对各个地址的访问，DNS建立了IP与域名之间的映射关系。这样就可以方便的访问你想要浏览的网站。</p>
-<p>浏览某个网页的网站时，首先通过DNS服务器获取网站域名对应的IP地址；然后通过HTTP协议生成相对应的HTTP报文；经过传输层封装成TCP报文并将大数据报文切割成报文段，通过三次握手建立客户端到服务器的连接；在网络层通过IP协议簇找到IP地址对应的MAC地址，通过路由器找到最终的服务器MAC地址。至此点击某个浏览器所产生的HTTP请求报文已被封装成帧的形式从客户端发送到服务器端。服务器端从链路层到应用层逐渐解析拆分，将帧转换成HTTP报文，请求成功。</p>
-<h2 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h2><ul>
-<li>2XX 正常处理完毕<ul>
-<li>200 ok</li>
-<li>204 no content</li>
-<li>206 partial content</li>
-</ul>
-</li>
-<li>3XX 重定向<ul>
-<li>301 moved permanent</li>
-<li>302 fond 资源暂时移走，临时重定向</li>
-<li>303 see other 资源暂时移走，临时重定向 以GET方法请求</li>
-<li>304 not modified 资源找到，但不符合条件请求</li>
-<li>307 temporary redirect 临时重定向</li>
-</ul>
-</li>
-<li><p>4XX 客户端错误</p>
-<ul>
-<li>401 unauthorized 未授权</li>
-<li>403 forbidden 禁止访问</li>
-<li>404 not found 服务器没有请求的资源</li>
-<li>405 请求方式不正确</li>
-</ul>
-</li>
-<li>5XX 服务器错误<ul>
-<li>500 internal error 内部资源错误</li>
-<li>503 service unavailable 服务器超载或者停机维护 </li>
-</ul>
-</li>
-</ul>
-<h2 id="代理proxy"><a href="#代理proxy" class="headerlink" title="代理proxy"></a>代理proxy</h2><p>所谓代理人，就是将将某件事情托付给某人，让此人代理你干某件事。在客户端访问服务端时有两种代理模式：正向代理、反向代理。如图6 所示，Proxy1是正向代理服务器，Proxy2是反向代理服务器。</p>
-<ul>
-<li>正向代理：有一台代理服务器代理客户端去请求服务端，对于服务端而言客户端不可见。</li>
-<li>反向代理：代理服务器位于服务端，对于客户端而言服务端不可见。</li>
-</ul>
-<p><img src="/2019/05/11/Http-note/proxy.jpg" alt="1557646200768"></p>
-<p><center>图 6 正向代理与反向代理</center><br>举个生活中的例子，买菜场景，三个对象：消费者（客户端）、菜场小贩（代理）、蔬菜大棚（服务器）。</p>
-<p>买菜时，消费者只知道菜场小贩（代理服务器），但不知道是哪个蔬菜大棚（服务端）生产的菜。此时消费者是客户端，蔬菜大棚是服务端。对于消费者（客户端）来说蔬菜大棚（服务端）不可见。菜场小贩是<strong>反向代理服务器</strong>。</p>
-<p>当菜场小贩去大棚进菜时，蔬菜大棚并不清楚具体是哪个消费者要吃哪个菜，将菜直接批发给小贩。此时对于蔬菜大棚（服务端）来说，消费者（客户端）不可见，菜场小贩是<strong>正向代理服务器</strong>。</p>
-<h2 id="网络安全"><a href="#网络安全" class="headerlink" title="网络安全"></a>网络安全</h2><p>HTTP协议简单无状态、无连接，但是简单随之而来的是安全问题。HTTP协议面临的安全问题主要包含三类：</p>
-<ul>
-<li>通信采用明文，通信内容可能被截取。</li>
-<li>可能遭遇伪装，无法验证通信双方的身份</li>
-<li>通信内容遭到篡改导致内容不完整</li>
-</ul>
-<p>针对以上问题在HTTP基础之上，诞生出HTTPS协议。即HTTPS = HTTP + 加密 + 认证 + 完整性保护。在TCP与HTTP 之间添加一层SSL协议，TCP首先与SSL协议通讯，之后SSL协议再和HTTP通信。</p>
-<ol>
-<li>首先大家想第一个问题，如何给通信内容加密？</li>
-</ol>
-<p>你可能会说利用密钥给通讯内容上锁，双方同时保存密钥。这就是加密方法之一的对称加密算法，双方持有相同的密钥，并且对通讯内容进行加密解密时用同一把密钥。这种方式最大的缺点在于，任何人只要能获取密钥，就可以对通讯内容进行解密。使用对称加密的方式难点在于如何把密钥共享给双方而不被其他人窃取到？</p>
-<p>此时密码学中另外一种加密方式派上用场：非对称加密算法。即有一对密钥，一个公钥，一个私钥。利用公钥对明文加密，利用私钥对密文解密。如果没有私钥，暴力很难解开密文。我们可以粗略认为：公钥加密过的密文只有与其配对的私钥才能解开。此时我们可以采取这种方式，服务端将公钥发送给任意客户端，客户端拿到公钥后，对请求的内容做加密处理，只有持有私钥的服务端才能解开密文，因此可解决对称加密方式中的密钥共享问题。</p>
-<p>但是非对称加密方式也不是绝对可靠的，如果有人伪装成服务端，将一个假的公钥发送给客户端，客户端无法确认对方身份，将内容按照假公钥进行加密，此时内容就会被别人破解。</p>
-<ol start="2">
-<li>所以第二个问题，如何证明公钥与发送公钥机构是配对的？</li>
-</ol>
-<p>此时证书认证的作用就来了。证书一般由一个可信赖的机构颁发，确认某个公钥与某个机构的对应关系。就像工商局办法的营业执照一样，A饭店的营业执照就是A，别人在网上能查到真伪，拥有B执照的饭店无法伪装成A饭店。拥有证书的服务端在发布自己的公钥时，会将自己的公钥与数字认证的证书编号一起发送出去，客户端收到公钥与证书编号后会确认证书的真伪，从而判断公钥的有效性。</p>
-<ol start="3">
-<li>最后一步验证报文的完成性，常用的由MD5散列值校验法、确认文件的数字签名方法。</li>
-</ol>
-<p>HTTPS采用的是混合加密制，虽然非对称加密方式解决了对称加密方式共享密钥的困境，但是其处理速度较慢，如果每次通信都采用非对称加密速度会很慢。故HTTPS采用以下方式：</p>
-<ul>
-<li><p>利用非对称加密方式将对称加密的密钥进行加密传输</p>
-</li>
-<li><p>获取对称加密的密钥后，双方采用对称加密方式进行加密传输</p>
-</li>
-</ul>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>《图解HTTP》</p>
-<p>《计算机网络通讯协议》</p>
-
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>反射技术是非常关键的一项技术，在动态代理、spring IOC容器、AOP中广泛应用。某些场景下，在类编译时并不知道类的确切类型，只有在运行时才可确定其类型。</p>
+<h3 id="反射简介及使用"><a href="#反射简介及使用" class="headerlink" title="反射简介及使用"></a>反射简介及使用</h3><p>反射指运行时获取类的相关信息，包括类的字段、方法构造器等信息。有了这些信息我们可以做很多事情，例如类实例对象的创建；方法名称、参数的获取；字段名称获取等。反射在运行时获取这些信息，需要在运行时打开和检查Class文件。</p>
+<h4 id="类信息获取"><a href="#类信息获取" class="headerlink" title="类信息获取"></a>类信息获取</h4><p>获取类信息有四种方法：类对象、Class的forName()方法、类实例对象的getClass()方法、类加载器的loadClass()方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据类对象获取类信息</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">getObjectByClass</span><span class="params">(Class&lt;?&gt; targetClass)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    Class&lt;?&gt; cls = targetClass;</span><br><span class="line">    Object obj = cls.newInstance();</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 根据类全限定名称获取类</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">getObjectByClassName</span><span class="params">(String className)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">    Class&lt;?&gt; cls = Class.forName(className);</span><br><span class="line">    Object obj = cls.newInstance();</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 根据类实例对象获取类</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">getObjectByInstance</span><span class="params">(Object instance)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    Class&lt;?&gt; cls = instance.getClass();</span><br><span class="line">    Object obj = cls.newInstance();</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 根据类的全限定名称加载类</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">getObjectByClassLoader</span><span class="params">(String className)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    Class&lt;?&gt; cls = <span class="keyword">this</span>.getClass().getClassLoader().loadClass(className);</span><br><span class="line">    Object obj = cls.newInstance();</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="字段获取"><a href="#字段获取" class="headerlink" title="字段获取"></a>字段获取</h4><p>可以通过实例对象获取字段信息（字段名称、类型、值），并且可以对字段进行复制等操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">getFieldByName</span><span class="params">(Object instance, String fieldName, Object value)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    Class&lt;?&gt; cls = instance.getClass();</span><br><span class="line">    <span class="comment">// 根据字段名称获取字段</span></span><br><span class="line">    Field field = cls.getField(fieldName);</span><br><span class="line">    <span class="comment">// 输出字段名称</span></span><br><span class="line">    System.out.println(field.getName());</span><br><span class="line">    <span class="comment">// 输出instant实例对象中该字段的值</span></span><br><span class="line">    System.out.println(field.get(instance));</span><br><span class="line">    <span class="comment">// 获取字段的类型</span></span><br><span class="line">    Class&lt;?&gt; fieldClass = field.getDeclaringClass();</span><br><span class="line">    System.out.println(fieldClass.getName());</span><br><span class="line">    <span class="comment">// 对字段赋值</span></span><br><span class="line">    field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">    field.set(instance, value);</span><br><span class="line">    <span class="keyword">return</span> field;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="方法信息获取"><a href="#方法信息获取" class="headerlink" title="方法信息获取"></a>方法信息获取</h4><p>通过类信息可获取方法的名称、方法参数、返回值类型等信息，还可通过invoke()方法执行实例对象的某个方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Object[] getMethodByName(Object instance, Object[] params) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    Class&lt;?&gt; cls = instance.getClass();</span><br><span class="line">    Method[] methods = cls.getMethods();</span><br><span class="line">    <span class="keyword">for</span> (Method method : methods) &#123;</span><br><span class="line">        <span class="comment">// 获取方法名称</span></span><br><span class="line">        System.out.println(method.getName());</span><br><span class="line">        <span class="comment">// 获取方法参数</span></span><br><span class="line">        Object[] ps = method.getParameters();</span><br><span class="line">        <span class="keyword">for</span>(Object p : ps)&#123;</span><br><span class="line">            System.out.println(p.toString());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 获取方法返回值的类型</span></span><br><span class="line">        AnnotatedType annotatedType = method.getAnnotatedReturnType();</span><br><span class="line">        System.out.println(annotatedType.getType().getTypeName());</span><br><span class="line">        <span class="comment">// 执行方法调用</span></span><br><span class="line">        method.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        method.invoke(instance, params);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> methods;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -663,7 +558,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/http/" rel="tag"># http</a>
+            <a href="/tags/reflection/" rel="tag"># reflection</a>
           
         </div>
       
@@ -676,8 +571,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/10/hexo搭建博客踩坑/" rel="next" title="hexo搭建博客踩坑">
-                <i class="fa fa-chevron-left"></i> hexo搭建博客踩坑
+              <a href="/2019/06/30/Class-loader/" rel="next" title="jvm(3)--类加载">
+                <i class="fa fa-chevron-left"></i> jvm(3)--类加载
               </a>
             
           </div>
@@ -685,10 +580,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/12/collections/" rel="prev" title="java集合类">
-                java集合类 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -921,7 +812,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机基础"><span class="nav-number">2.</span> <span class="nav-text">计算机基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP状态码"><span class="nav-number">3.</span> <span class="nav-text">HTTP状态码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代理proxy"><span class="nav-number">4.</span> <span class="nav-text">代理proxy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络安全"><span class="nav-number">5.</span> <span class="nav-text">网络安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反射简介及使用"><span class="nav-number">2.</span> <span class="nav-text">反射简介及使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类信息获取"><span class="nav-number">2.1.</span> <span class="nav-text">类信息获取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字段获取"><span class="nav-number">2.2.</span> <span class="nav-text">字段获取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法信息获取"><span class="nav-number">2.3.</span> <span class="nav-text">方法信息获取</span></a></li></ol></li></ol></div>
             
 
           </div>
