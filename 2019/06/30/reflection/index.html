@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="Home page">
 <meta property="og:description" content="前言反射技术是非常关键的一项技术，在动态代理、spring IOC容器、AOP中广泛应用。某些场景下，在类编译时并不知道类的确切类型，只有在运行时才可确定其类型。 反射简介及使用反射指运行时获取类的相关信息，包括类的字段、方法构造器等信息。有了这些信息我们可以做很多事情，例如类实例对象的创建；方法名称、参数的获取；字段名称获取等。反射在运行时获取这些信息，需要在运行时打开和检查Class文件。 类">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-30T16:06:31.912Z">
+<meta property="og:updated_time" content="2019-07-03T14:49:22.119Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="反射">
 <meta name="twitter:description" content="前言反射技术是非常关键的一项技术，在动态代理、spring IOC容器、AOP中广泛应用。某些场景下，在类编译时并不知道类的确切类型，只有在运行时才可确定其类型。 反射简介及使用反射指运行时获取类的相关信息，包括类的字段、方法构造器等信息。有了这些信息我们可以做很多事情，例如类实例对象的创建；方法名称、参数的获取；字段名称获取等。反射在运行时获取这些信息，需要在运行时打开和检查Class文件。 类">
@@ -436,7 +436,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-01 00:06:31" itemprop="dateModified" datetime="2019-07-01T00:06:31+08:00">2019-07-01</time>
+                <time title="修改时间：2019-07-03 22:49:22" itemprop="dateModified" datetime="2019-07-03T22:49:22+08:00">2019-07-03</time>
               
             
           </span>
@@ -503,6 +503,9 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">getFieldByName</span><span class="params">(Object instance, String fieldName, Object value)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    Class&lt;?&gt; cls = instance.getClass();</span><br><span class="line">    <span class="comment">// 根据字段名称获取字段</span></span><br><span class="line">    Field field = cls.getField(fieldName);</span><br><span class="line">    <span class="comment">// 输出字段名称</span></span><br><span class="line">    System.out.println(field.getName());</span><br><span class="line">    <span class="comment">// 输出instant实例对象中该字段的值</span></span><br><span class="line">    System.out.println(field.get(instance));</span><br><span class="line">    <span class="comment">// 获取字段的类型</span></span><br><span class="line">    Class&lt;?&gt; fieldClass = field.getDeclaringClass();</span><br><span class="line">    System.out.println(fieldClass.getName());</span><br><span class="line">    <span class="comment">// 对字段赋值</span></span><br><span class="line">    field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">    field.set(instance, value);</span><br><span class="line">    <span class="keyword">return</span> field;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="方法信息获取"><a href="#方法信息获取" class="headerlink" title="方法信息获取"></a>方法信息获取</h4><p>通过类信息可获取方法的名称、方法参数、返回值类型等信息，还可通过invoke()方法执行实例对象的某个方法。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Object[] getMethodByName(Object instance, Object[] params) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    Class&lt;?&gt; cls = instance.getClass();</span><br><span class="line">    Method[] methods = cls.getMethods();</span><br><span class="line">    <span class="keyword">for</span> (Method method : methods) &#123;</span><br><span class="line">        <span class="comment">// 获取方法名称</span></span><br><span class="line">        System.out.println(method.getName());</span><br><span class="line">        <span class="comment">// 获取方法参数</span></span><br><span class="line">        Object[] ps = method.getParameters();</span><br><span class="line">        <span class="keyword">for</span>(Object p : ps)&#123;</span><br><span class="line">            System.out.println(p.toString());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 获取方法返回值的类型</span></span><br><span class="line">        AnnotatedType annotatedType = method.getAnnotatedReturnType();</span><br><span class="line">        System.out.println(annotatedType.getType().getTypeName());</span><br><span class="line">        <span class="comment">// 执行方法调用</span></span><br><span class="line">        method.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        method.invoke(instance, params);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> methods;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="构造方法获取"><a href="#构造方法获取" class="headerlink" title="构造方法获取"></a>构造方法获取</h4><p>根据构造函数的入参类型，可以获取类的构造函数。默认构造函数的入参为null，并可通过构造函数创建对象。getDeclaredConstructor(null)或者getConstructor(null)均可获取默认构造。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">getConstructor</span><span class="params">(Object instance)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">    Class&lt;?&gt; cls = instance.getClass();</span><br><span class="line">    Constructor constructor = cls.getDeclaredConstructor(<span class="keyword">null</span>);</span><br><span class="line">    Object object = constructor.newInstance();</span><br><span class="line">    <span class="keyword">return</span> object</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -581,6 +584,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/07/03/general-type/" rel="prev" title="泛型">
+                泛型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -654,7 +661,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -726,7 +733,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">15</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -812,7 +823,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反射简介及使用"><span class="nav-number">2.</span> <span class="nav-text">反射简介及使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类信息获取"><span class="nav-number">2.1.</span> <span class="nav-text">类信息获取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字段获取"><span class="nav-number">2.2.</span> <span class="nav-text">字段获取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法信息获取"><span class="nav-number">2.3.</span> <span class="nav-text">方法信息获取</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反射简介及使用"><span class="nav-number">2.</span> <span class="nav-text">反射简介及使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类信息获取"><span class="nav-number">2.1.</span> <span class="nav-text">类信息获取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字段获取"><span class="nav-number">2.2.</span> <span class="nav-text">字段获取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法信息获取"><span class="nav-number">2.3.</span> <span class="nav-text">方法信息获取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构造方法获取"><span class="nav-number">2.4.</span> <span class="nav-text">构造方法获取</span></a></li></ol></li></ol></div>
             
 
           </div>

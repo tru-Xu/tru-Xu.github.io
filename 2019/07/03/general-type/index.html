@@ -96,17 +96,18 @@
 
 
 
-  <meta name="description" content="前言：博客主页 java语言基础  java集合类 eqauls与hashCode重写 ConcurrentHashMap   反射 泛型  多线程  Synchronize Lock 线程池 死锁 乐观锁  MySQL  常用语句 索引优化 性能优化  Spring框架  IOC Bean生命周期 AOP 事务  设计模式  单例模式 工厂模式 策略模式 装饰者模式 代理模式  jvm  jvm">
+  <meta name="description" content="前言一般类方法只能使用具体的类型，无法适用于多种类型的代码。即使是继承体系或者接口实现等方法，还是会有很多约束，无法编写出更通用的代码。Java5以后，为创造容器类促成了泛型的产生。 简介泛型字面上含义指一般的类型，通过一些符号代码某很多的类型，可以有边界也可以指所有类型。容器本身就支持各种各样的类型对象，泛型在容器中广泛应用。泛型可被应用与接口、方法，可以被擦除或者添加界限。 泛型接口12345">
+<meta name="keywords" content="java-base,general type">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java学习博客">
-<meta property="og:url" content="http://tru-Xu.github.io/2019/05/08/导航/index.html">
+<meta property="og:title" content="泛型">
+<meta property="og:url" content="http://tru-Xu.github.io/2019/07/03/general-type/index.html">
 <meta property="og:site_name" content="Home page">
-<meta property="og:description" content="前言：博客主页 java语言基础  java集合类 eqauls与hashCode重写 ConcurrentHashMap   反射 泛型  多线程  Synchronize Lock 线程池 死锁 乐观锁  MySQL  常用语句 索引优化 性能优化  Spring框架  IOC Bean生命周期 AOP 事务  设计模式  单例模式 工厂模式 策略模式 装饰者模式 代理模式  jvm  jvm">
+<meta property="og:description" content="前言一般类方法只能使用具体的类型，无法适用于多种类型的代码。即使是继承体系或者接口实现等方法，还是会有很多约束，无法编写出更通用的代码。Java5以后，为创造容器类促成了泛型的产生。 简介泛型字面上含义指一般的类型，通过一些符号代码某很多的类型，可以有边界也可以指所有类型。容器本身就支持各种各样的类型对象，泛型在容器中广泛应用。泛型可被应用与接口、方法，可以被擦除或者添加界限。 泛型接口12345">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-30T14:55:42.528Z">
+<meta property="og:updated_time" content="2019-07-03T16:29:06.943Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java学习博客">
-<meta name="twitter:description" content="前言：博客主页 java语言基础  java集合类 eqauls与hashCode重写 ConcurrentHashMap   反射 泛型  多线程  Synchronize Lock 线程池 死锁 乐观锁  MySQL  常用语句 索引优化 性能优化  Spring框架  IOC Bean生命周期 AOP 事务  设计模式  单例模式 工厂模式 策略模式 装饰者模式 代理模式  jvm  jvm">
+<meta name="twitter:title" content="泛型">
+<meta name="twitter:description" content="前言一般类方法只能使用具体的类型，无法适用于多种类型的代码。即使是继承体系或者接口实现等方法，还是会有很多约束，无法编写出更通用的代码。Java5以后，为创造容器类促成了泛型的产生。 简介泛型字面上含义指一般的类型，通过一些符号代码某很多的类型，可以有边界也可以指所有类型。容器本身就支持各种各样的类型对象，泛型在容器中广泛应用。泛型可被应用与接口、方法，可以被擦除或者添加界限。 泛型接口12345">
 
 
 
@@ -114,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="http://tru-Xu.github.io/2019/05/08/导航/">
+  <link rel="canonical" href="http://tru-Xu.github.io/2019/07/03/general-type/">
 
 
 
@@ -124,7 +125,7 @@
   };
 </script>
 
-  <title>Java学习博客 | Home page</title>
+  <title>泛型 | Home page</title>
   
 
 
@@ -375,7 +376,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tru-Xu.github.io/2019/05/08/导航/">
+    <link itemprop="mainEntityOfPage" href="http://tru-Xu.github.io/2019/07/03/general-type/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tru-Xu">
@@ -392,7 +393,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Java学习博客
+          <h1 class="post-title" itemprop="name headline">泛型
 
               
             
@@ -418,7 +419,7 @@
                 
               
 
-              <time title="创建时间：2019-05-08 23:09:16" itemprop="dateCreated datePublished" datetime="2019-05-08T23:09:16+08:00">2019-05-08</time>
+              <time title="创建时间：2019-07-03 22:58:12" itemprop="dateCreated datePublished" datetime="2019-07-03T22:58:12+08:00">2019-07-03</time>
             
 
             
@@ -435,11 +436,29 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-30 22:55:42" itemprop="dateModified" datetime="2019-06-30T22:55:42+08:00">2019-06-30</time>
+                <time title="修改时间：2019-07-04 00:29:06" itemprop="dateModified" datetime="2019-07-04T00:29:06+08:00">2019-07-04</time>
               
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java-base/" itemprop="url" rel="index"><span itemprop="name">java-base</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -476,70 +495,20 @@
       
 
       
-        <h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a><strong>前言：</strong></h3><p><a href="https://tru-xu.github.io">博客主页</a></p>
-<h3 id="java语言基础"><a href="#java语言基础" class="headerlink" title="java语言基础"></a>java语言基础</h3><hr>
-<ul>
-<li><a href="https://tru-xu.github.io/2019/05/11/collections/">java集合类</a><ul>
-<li><a href="https://tru-xu.github.io/2019/05/15/equals与hashCode/">eqauls与hashCode重写</a></li>
-<li><a href>ConcurrentHashMap</a></li>
-</ul>
-</li>
-<li>反射</li>
-<li>泛型</li>
-</ul>
-<h3 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h3><hr>
-<ul>
-<li>Synchronize</li>
-<li>Lock</li>
-<li>线程池</li>
-<li>死锁</li>
-<li>乐观锁</li>
-</ul>
-<h3 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h3><hr>
-<ul>
-<li>常用语句</li>
-<li>索引优化</li>
-<li>性能优化</li>
-</ul>
-<h3 id="Spring框架"><a href="#Spring框架" class="headerlink" title="Spring框架"></a>Spring框架</h3><hr>
-<ul>
-<li>IOC</li>
-<li>Bean生命周期</li>
-<li>AOP</li>
-<li>事务</li>
-</ul>
-<h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><hr>
-<ul>
-<li>单例模式</li>
-<li>工厂模式</li>
-<li>策略模式</li>
-<li>装饰者模式</li>
-<li>代理模式</li>
-</ul>
-<h3 id="jvm"><a href="#jvm" class="headerlink" title="jvm"></a>jvm</h3><hr>
-<ul>
-<li><a href="https://tru-xu.github.io/2019/06/05/memory-management/">jvm内存分区</a></li>
-<li><a href="https://tru-xu.github.io/2019/06/23/gc-collector/">GC回收</a></li>
-<li><a href="https://tru-xu.github.io/2019/06/30/Class-loader/">类加载</a></li>
-<li><a href="https://tru-xu.github.io/2019/06/02/thread-security/">并发与锁</a></li>
-</ul>
-<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><hr>
-<ul>
-<li>快排</li>
-<li>堆排序</li>
-<li>KMP</li>
-<li>动态规划</li>
-<li>回溯法</li>
-</ul>
-<h3 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h3><hr>
-<ul>
-<li><a href="https://tru-xu.github.io/2019/05/11/Http-note/">http协议简介</a></li>
-<li><a href>TCP协议</a></li>
-</ul>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
-<li><a href="https://tru-xu.github.io/2019/05/10/hexo搭建博客踩坑/">github + hexo + next博客搭建踩坑</a></li>
-<li>git常用命令</li>
-</ul>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>一般类方法只能使用具体的类型，无法适用于多种类型的代码。即使是继承体系或者接口实现等方法，还是会有很多约束，无法编写出更通用的代码。Java5以后，为创造容器类促成了泛型的产生。</p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>泛型字面上含义指一般的类型，通过一些符号代码某很多的类型，可以有边界也可以指所有类型。容器本身就支持各种各样的类型对象，泛型在容器中广泛应用。泛型可被应用与接口、方法，可以被擦除或者添加界限。</p>
+<h4 id="泛型接口"><a href="#泛型接口" class="headerlink" title="泛型接口"></a>泛型接口</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 泛型接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Generator</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function">T <span class="title">getNext</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Fibonacci</span> <span class="keyword">implements</span> <span class="title">Generator</span>&lt;<span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getNext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> fab(count++);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> Integer <span class="title">fab</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(n &lt; <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> fab(n-<span class="number">2</span>)+fab(n-<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Fibonacci fibonacci = <span class="keyword">new</span> Fibonacci();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> n = fibonacci.getNext();</span><br><span class="line">            System.out.print(n + <span class="string">" "</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"E:\Program Files\Java\jdk1.8.0_91\bin\java"</span> <span class="string">"-javaagent:D:\Program ……</span></span><br><span class="line"><span class="string">1 1 2 3 5 8 13 21 34 55 </span></span><br><span class="line"><span class="string">Process finished with exit code 0</span></span><br></pre></td></tr></table></figure>
+<h4 id="泛型方法"><a href="#泛型方法" class="headerlink" title="泛型方法"></a>泛型方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GeneralMethod</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 泛型方法</span></span><br><span class="line">    <span class="keyword">public</span> &lt;T&gt; <span class="function">String <span class="title">getClassName</span><span class="params">(T t)</span></span>&#123;</span><br><span class="line">        String name = t.getClass().getName();</span><br><span class="line">        System.out.println(name);</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        GeneralMethod generalMethod = <span class="keyword">new</span> GeneralMethod();</span><br><span class="line">        generalMethod.getClassName(<span class="string">""</span>);</span><br><span class="line">        generalMethod.getClassName(<span class="number">0</span>);</span><br><span class="line">        generalMethod.getClassName(<span class="number">0L</span>);</span><br><span class="line">        generalMethod.getClassName(<span class="number">2.0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"E:\Program Files\Java\jdk1.8.0_91\bin\java"</span> <span class="string">"-javaagent:D:\Program ……</span></span><br><span class="line"><span class="string">java.lang.String</span></span><br><span class="line"><span class="string">java.lang.Integer</span></span><br><span class="line"><span class="string">java.lang.Long</span></span><br><span class="line"><span class="string">java.lang.Double</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Process finished with exit code 0</span></span><br></pre></td></tr></table></figure>
+<h4 id="擦除"><a href="#擦除" class="headerlink" title="擦除"></a>擦除</h4><p>java泛型是通过擦除实现的，容器中泛型被指定为具体类型时会被擦除。List<integer>与List<string>在java中都是List<t>，他们的类型相同。</t></string></integer></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">erase</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        List&lt;Integer&gt; integers = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        List&lt;String&gt; strings = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Map&lt;Integer, String&gt; integerStringMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        Map&lt;String, String&gt; stringStringMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        System.out.println(Arrays.toString(integerStringMap.getClass()</span><br><span class="line">                                           .getTypeParameters()));</span><br><span class="line">        System.out.println(integerStringMap.getClass() </span><br><span class="line">                           == stringStringMap.getClass());</span><br><span class="line">        System.out.println(integers.getClass() == strings.getClass());</span><br><span class="line">        System.out.println(integers.equals(strings));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果为</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"E:\Program Files\Java\jdk1.8.0_91\bin\java"</span> <span class="string">"-javaagent:D:\Program ……</span></span><br><span class="line"><span class="string">[K, V]</span></span><br><span class="line"><span class="string">true</span></span><br><span class="line"><span class="string">true</span></span><br><span class="line"><span class="string">true</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Process finished with exit code 0</span></span><br></pre></td></tr></table></figure>
+<h4 id="边界"><a href="#边界" class="headerlink" title="边界"></a>边界</h4><p>泛型没有边界时只能使用Object的方法，无法使用指定类型的方法，若想使用指定类型的方法必须加上边界。java泛型通过extends关键字添加边界，具体用法如下代码所示，泛型的边界为String，则泛型可以使用String特有的charAt()方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">boader</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> &lt;T extends String&gt; <span class="function"><span class="keyword">void</span> <span class="title">getChar</span><span class="params">(T s)</span></span>&#123;</span><br><span class="line">        <span class="keyword">char</span> c = s.charAt(<span class="number">0</span>);</span><br><span class="line">        System.out.println(c);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -594,6 +563,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/java-base/" rel="tag"># java-base</a>
+          
+            <a href="/tags/general-type/" rel="tag"># general type</a>
+          
+        </div>
+      
 
       
       
@@ -603,8 +580,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/07/随笔/" rel="next" title="随笔">
-                <i class="fa fa-chevron-left"></i> 随笔
+              <a href="/2019/06/30/reflection/" rel="next" title="反射">
+                <i class="fa fa-chevron-left"></i> 反射
               </a>
             
           </div>
@@ -612,10 +589,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/10/hexo搭建博客踩坑/" rel="prev" title="hexo搭建博客踩坑">
-                hexo搭建博客踩坑 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -852,7 +825,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java语言基础"><span class="nav-number">2.</span> <span class="nav-text">java语言基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程"><span class="nav-number">3.</span> <span class="nav-text">多线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL"><span class="nav-number">4.</span> <span class="nav-text">MySQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring框架"><span class="nav-number">5.</span> <span class="nav-text">Spring框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计模式"><span class="nav-number">6.</span> <span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jvm"><span class="nav-number">7.</span> <span class="nav-text">jvm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法"><span class="nav-number">8.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算机网络"><span class="nav-number">9.</span> <span class="nav-text">计算机网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">10.</span> <span class="nav-text">其他</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#泛型接口"><span class="nav-number">2.1.</span> <span class="nav-text">泛型接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#泛型方法"><span class="nav-number">2.2.</span> <span class="nav-text">泛型方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#擦除"><span class="nav-number">2.3.</span> <span class="nav-text">擦除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#边界"><span class="nav-number">2.4.</span> <span class="nav-text">边界</span></a></li></ol></li></ol></div>
             
 
           </div>
