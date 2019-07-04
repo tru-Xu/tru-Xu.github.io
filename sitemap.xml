@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://tru-Xu.github.io/2019/07/04/memory-model/</loc>
+    
+    <lastmod>2019-07-04T16:11:49.652Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tru-Xu.github.io/2019/05/08/%E5%AF%BC%E8%88%AA/</loc>
+    
+    <lastmod>2019-07-04T15:13:59.265Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tru-Xu.github.io/2019/07/03/general-type/</loc>
     
-    <lastmod>2019-07-03T16:29:06.943Z</lastmod>
+    <lastmod>2019-07-04T15:10:19.840Z</lastmod>
     
   </url>
   
@@ -12,13 +26,6 @@
     <loc>http://tru-Xu.github.io/2019/06/30/reflection/</loc>
     
     <lastmod>2019-07-03T14:49:22.119Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tru-Xu.github.io/2019/05/08/%E5%AF%BC%E8%88%AA/</loc>
-    
-    <lastmod>2019-06-30T14:55:42.528Z</lastmod>
     
   </url>
   

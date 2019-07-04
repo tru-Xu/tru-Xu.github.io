@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://tru-Xu.github.io/2019/07/04/memory-model/</loc>
+    <lastmod>2019-07-04</lastmod>
+  </url>  <url>
+    <loc>http://tru-Xu.github.io/2019/05/08/%E5%AF%BC%E8%88%AA/</loc>
+    <lastmod>2019-07-04</lastmod>
+  </url>  <url>
     <loc>http://tru-Xu.github.io/2019/07/03/general-type/</loc>
-    <lastmod>2019-07-03</lastmod>
+    <lastmod>2019-07-04</lastmod>
   </url>  <url>
     <loc>http://tru-Xu.github.io/2019/06/30/reflection/</loc>
     <lastmod>2019-07-03</lastmod>
-  </url>  <url>
-    <loc>http://tru-Xu.github.io/2019/05/08/%E5%AF%BC%E8%88%AA/</loc>
-    <lastmod>2019-06-30</lastmod>
   </url>  <url>
     <loc>http://tru-Xu.github.io/2019/05/11/Http-note/</loc>
     <lastmod>2019-06-30</lastmod>
