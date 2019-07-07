@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://tru-Xu.github.io/2019/07/04/memory-model/</loc>
-    <lastmod>2019-07-04</lastmod>
-  </url>  <url>
     <loc>http://tru-Xu.github.io/2019/05/08/%E5%AF%BC%E8%88%AA/</loc>
-    <lastmod>2019-07-04</lastmod>
+    <lastmod>2019-07-07</lastmod>
+  </url>  <url>
+    <loc>http://tru-Xu.github.io/2019/06/02/thread-security/</loc>
+    <lastmod>2019-07-07</lastmod>
+  </url>  <url>
+    <loc>http://tru-Xu.github.io/2019/07/04/memory-model/</loc>
+    <lastmod>2019-07-07</lastmod>
   </url>  <url>
     <loc>http://tru-Xu.github.io/2019/07/03/general-type/</loc>
     <lastmod>2019-07-04</lastmod>
@@ -21,9 +24,6 @@
   </url>  <url>
     <loc>http://tru-Xu.github.io/2019/05/10/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E8%B8%A9%E5%9D%91/</loc>
     <lastmod>2019-06-30</lastmod>
-  </url>  <url>
-    <loc>http://tru-Xu.github.io/2019/06/02/thread-security/</loc>
-    <lastmod>2019-06-27</lastmod>
   </url>  <url>
     <loc>http://tru-Xu.github.io/2019/06/23/gc-collector/</loc>
     <lastmod>2019-06-27</lastmod>
