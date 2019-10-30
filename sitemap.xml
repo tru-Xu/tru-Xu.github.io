@@ -2,16 +2,44 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://tru-Xu.github.io/2019/08/08/nio/</loc>
+    <loc>http://tru-Xu.github.io/2019/10/14/mysql-lock/</loc>
     
-    <lastmod>2019-08-21T15:12:29.890Z</lastmod>
+    <lastmod>2019-10-30T16:12:34.299Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tru-Xu.github.io/2019/05/10/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E8%B8%A9%E5%9D%91/</loc>
+    
+    <lastmod>2019-10-20T14:02:39.827Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tru-Xu.github.io/2019/05/20/ConcurrentHashMap/</loc>
+    
+    <lastmod>2019-10-20T14:02:00.914Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://tru-Xu.github.io/2019/05/08/%E5%AF%BC%E8%88%AA/</loc>
     
-    <lastmod>2019-08-10T14:29:00.988Z</lastmod>
+    <lastmod>2019-10-13T16:03:21.733Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tru-Xu.github.io/2019/08/08/nio/</loc>
+    
+    <lastmod>2019-09-13T15:52:50.739Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tru-Xu.github.io/2019/09/10/1.%20assumption/</loc>
+    
+    <lastmod>2019-09-10T16:00:19.321Z</lastmod>
     
   </url>
   
@@ -65,13 +93,6 @@
   </url>
   
   <url>
-    <loc>http://tru-Xu.github.io/2019/05/10/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E8%B8%A9%E5%9D%91/</loc>
-    
-    <lastmod>2019-06-30T13:53:21.549Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://tru-Xu.github.io/2019/06/23/gc-collector/</loc>
     
     <lastmod>2019-06-27T15:39:30.001Z</lastmod>
@@ -82,13 +103,6 @@
     <loc>http://tru-Xu.github.io/2019/06/05/memory-management/</loc>
     
     <lastmod>2019-06-23T15:46:10.304Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://tru-Xu.github.io/2019/05/20/ConcurrentHashMap/</loc>
-    
-    <lastmod>2019-06-23T15:29:24.334Z</lastmod>
     
   </url>
   
