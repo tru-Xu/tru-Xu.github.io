@@ -96,19 +96,19 @@
 
 
 
-  <meta name="description" content="前言在mysql数据库Innodb的使用过程中，事务、事务隔离级别、读锁、写锁等都是绕不开的话题。本文针对事务的特性、隔离级别以及事务隔离级别与锁相关的问题做一些探讨。 事务隔离级别事务ACID特性首先事务拥有ACID四大特征，即：  原子性Atomic：事务不可被分割，同一个事务内的多个数据库操作要么都成功，要么都失败 一致性Consisency：事务操作成功后，数据库所处的状态和它的业务业务规">
+  <meta name="description" content="前言在mysql数据库InnoDB的使用过程中，事务、事务隔离级别、读锁、写锁等都是绕不开的话题。本文针对事务的特性、隔离级别以及事务隔离级别与锁相关的问题做一些探讨。 事务隔离级别事务ACID特性首先事务拥有ACID四大特征，即：  原子性Atomic：事务不可被分割，同一个事务内的多个数据库操作要么都成功，要么都失败 一致性Consisency：事务操作成功后，数据库所处的状态和它的业务业务规">
 <meta name="keywords" content="mysql,lock">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql锁机制">
 <meta property="og:url" content="http://tru-Xu.github.io/2019/10/14/mysql-lock/index.html">
 <meta property="og:site_name" content="Home page">
-<meta property="og:description" content="前言在mysql数据库Innodb的使用过程中，事务、事务隔离级别、读锁、写锁等都是绕不开的话题。本文针对事务的特性、隔离级别以及事务隔离级别与锁相关的问题做一些探讨。 事务隔离级别事务ACID特性首先事务拥有ACID四大特征，即：  原子性Atomic：事务不可被分割，同一个事务内的多个数据库操作要么都成功，要么都失败 一致性Consisency：事务操作成功后，数据库所处的状态和它的业务业务规">
+<meta property="og:description" content="前言在mysql数据库InnoDB的使用过程中，事务、事务隔离级别、读锁、写锁等都是绕不开的话题。本文针对事务的特性、隔离级别以及事务隔离级别与锁相关的问题做一些探讨。 事务隔离级别事务ACID特性首先事务拥有ACID四大特征，即：  原子性Atomic：事务不可被分割，同一个事务内的多个数据库操作要么都成功，要么都失败 一致性Consisency：事务操作成功后，数据库所处的状态和它的业务业务规">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://tru-xu.github.io/2019/10/14/mysql-lock/next-keylock.png">
-<meta property="og:updated_time" content="2019-10-30T16:12:34.299Z">
+<meta property="og:updated_time" content="2019-11-02T15:05:59.405Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql锁机制">
-<meta name="twitter:description" content="前言在mysql数据库Innodb的使用过程中，事务、事务隔离级别、读锁、写锁等都是绕不开的话题。本文针对事务的特性、隔离级别以及事务隔离级别与锁相关的问题做一些探讨。 事务隔离级别事务ACID特性首先事务拥有ACID四大特征，即：  原子性Atomic：事务不可被分割，同一个事务内的多个数据库操作要么都成功，要么都失败 一致性Consisency：事务操作成功后，数据库所处的状态和它的业务业务规">
+<meta name="twitter:description" content="前言在mysql数据库InnoDB的使用过程中，事务、事务隔离级别、读锁、写锁等都是绕不开的话题。本文针对事务的特性、隔离级别以及事务隔离级别与锁相关的问题做一些探讨。 事务隔离级别事务ACID特性首先事务拥有ACID四大特征，即：  原子性Atomic：事务不可被分割，同一个事务内的多个数据库操作要么都成功，要么都失败 一致性Consisency：事务操作成功后，数据库所处的状态和它的业务业务规">
 <meta name="twitter:image" content="http://tru-xu.github.io/2019/10/14/mysql-lock/next-keylock.png">
 
 
@@ -438,7 +438,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-10-31 00:12:34" itemprop="dateModified" datetime="2019-10-31T00:12:34+08:00">2019-10-31</time>
+                <time title="修改时间：2019-11-02 23:05:59" itemprop="dateModified" datetime="2019-11-02T23:05:59+08:00">2019-11-02</time>
               
             
           </span>
@@ -497,16 +497,16 @@
       
 
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在mysql数据库Innodb的使用过程中，事务、事务隔离级别、读锁、写锁等都是绕不开的话题。本文针对事务的特性、隔离级别以及事务隔离级别与锁相关的问题做一些探讨。</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在mysql数据库InnoDB的使用过程中，事务、事务隔离级别、读锁、写锁等都是绕不开的话题。本文针对事务的特性、隔离级别以及事务隔离级别与锁相关的问题做一些探讨。</p>
 <h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><h4 id="事务ACID特性"><a href="#事务ACID特性" class="headerlink" title="事务ACID特性"></a>事务ACID特性</h4><p>首先事务拥有ACID四大特征，即：</p>
 <ul>
 <li>原子性Atomic：事务不可被分割，同一个事务内的多个数据库操作要么都成功，要么都失败</li>
-<li>一致性Consisency：事务操作成功后，数据库所处的状态和它的业务业务规则是一致的，即数据不会被破坏。（Spring4.x，p356）</li>
-<li>隔离性Isolation：不同事务并发访问数据库时，都有自己的数据空间，互不干扰。具体干扰程度由事务隔离级别决定。</li>
-<li>持久性Durability：事务操作成功之后，所有数据操作都必须被持久到数据库中。</li>
+<li>一致性Consisency：事务操作成功后，数据库所处的状态和它的业务业务规则是一致的，即数据不会被破坏（Spring4.x，p356）</li>
+<li>隔离性Isolation：不同事务并发访问数据库时，都有自己的数据空间，互不干扰。具体干扰程度由事务隔离级别决定</li>
+<li>持久性Durability：事务操作成功之后，所有数据操作都必须被持久到数据库中</li>
 </ul>
-<h4 id="事务隔离级别-1"><a href="#事务隔离级别-1" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h4><p>在对数据库进行并发操作时会发生各种各样的问题。常见的三类：脏读、不可重复度、幻读。其中脏读比较容易理解，当前事务读取到其他事务操作的中间数据，但是其他事务最终撤回。那么当前事务读到的是一条脏数据，即发生了脏读。</p>
-<p>不可重复度与幻读比较容易混淆，搞明白一点就可以区分不可重复度与幻读，不可重复读只读同一条数据而言。在当前事务读取同一条数据时，由于其他事务的更新修改导致读取数据时读取的结果不一致。而幻读是指当前事务读取数据时，读取到其他已提交事务插入的数据。</p>
+<h4 id="事务隔离级别-1"><a href="#事务隔离级别-1" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h4><p>在对数据库进行并发操作时会发生各种各样的问题。常见的有三类：脏读、不可重复度、幻读。其中脏读比较容易理解，当前事务读取到其他事务操作的中间数据，但是其他事务最终撤回。那么当前事务读到的是一条脏数据，即发生了脏读。</p>
+<p>不可重复度与幻读比较容易混淆，搞明白一点就可以区分不可重复度与幻读，不可重复读指读同一条数据而言，幻读指的是读新插入的数据。在当前事务读取一条数据时，由于其他事务的修改，导致当前事务读取这条数据时与数据修改前读取的结果不一致。而幻读是指当前事务读取数据时，读取到其他已提交事务插入的数据。</p>
 <p>针对以上三种情况有四种隔离级别。</p>
 <table>
 <thead>
@@ -544,7 +544,7 @@
 </tr>
 </tbody>
 </table>
-<p>从上至下，隔离级别越来越高，并发性也越来越差。RN（读未提交）会造成脏读问题，所以实际开发中基本不会有人使用RN隔离级别的事务。RC（读已提交）、RR（可重复读）则比较常用。刚开始接触事务隔离级别时，很不容易区分这几种的区别与界限。后来发现根据隔离级别的名称以及加锁粒度上非常好区分。以如下表为例（后面很多论述都是以此表为例），分析四种事务隔离级别。</p>
+<p>从上至下，隔离级别越来越高，并发性也越来越差。RN（读未提交）会造成脏读问题，所以实际开发中基本不会有人使用RN隔离级别的事务。RC（读已提交）、RR（可重复读）则比较常用。刚开始接触事务隔离级别时，很不容易区分这几种的区别与界限。后来发现根据隔离级别的名称以及加锁粒度上非常好区分，RN读其他事务未提交的数据，RC读其他事务已提交的数据，RR相当于对读取数据加行锁（InnoDB不是这样实现），序列化读相当于加表锁。以如下表为例（后面很多论述都是以此表为例），分析四种事务隔离级别。</p>
 <table>
 <thead>
 <tr>
@@ -602,15 +602,134 @@
 </tbody>
 </table>
 <ul>
-<li><p>RN，读未提交。即A、B两个事务，B事务中对某一行记录做了修改但未提交事务，此时A事务可以读到B事务修改之后但未提交的内容。那么如果此时B事务回滚，刚才事务A读到的肯定是垃圾数据，也就发生了脏读。所以RN就是本事务读到其他事务修改但未提交的内容，那么极容易可能发生脏读。</p>
-<p>| 事务A                                                        | 事务B                                                  |<br>| ———————————————————— | —————————————————— |<br>| start transaction                                            | start transaction                                      |<br>| select student_num from teacher_info where id = 1;           |                                                        |<br>| 结果为：50                                                   |                                                        |<br>|                                                              | UPDATE teacher_info set student_num = 49 where id = 1; |<br>| update  teacher_info  set student_num = student_num + 1 where id = 1; |                                                        |<br>|                                                              | rollback；                                             |<br>| select student_num from teacher_info where id = 1;           |                                                        |<br>| 结果为：50（正确应为51）                                     |                                                        |</p>
-</li>
-<li><p>RC，读已提交。即A、B两个事务，B事务中对某一行记录做了修改但未提交事务，此时A事务读不到B事务修改但未提交的内容。只有在B事务提交之后，A事务才能读到B已经提交的数据，所以RC隔离级别不可能出现脏读。但是可能出现不可重复读，在同一个事务中读同一条数据，前后结果不一致。</p>
-</li>
-<li><p>RR， 可重复读。读已提交可以保证没有脏读，那么如何保证可重复读呢？在当前事务读某行数据时，对数据加上排它锁，这样其他事务就无法修改这些数据，那么这样就可以实现可重复读。（mysql引擎为保证高并发并没有加锁，而是通过快照读来实现假的可重复读，并通过MVCC来保证数据的一致性）。</p>
-</li>
-<li><p>序列化， 串行读。可重复读无法解决幻读问题，即读数据时，其他事务新增数据，那么当前事务就可能会读到之前不存在的数据。那么如何解决幻读问题呢？最直接的想法就是锁表，当前事务操作时进行锁表，那么其他事务就无法在表中插入新数据，也就不会出现幻读的问题。序列化隔离级别就是锁表读，可避免幻读。</p>
-</li>
+<li>RN读未提交示例：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>事务A</th>
+<th>事务B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>start transaction</td>
+<td>start transaction</td>
+</tr>
+<tr>
+<td>select student_num from teacher_info where id = 1;</td>
+<td></td>
+</tr>
+<tr>
+<td>结果为：50</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>UPDATE teacher_info set student_num = 49 where id = 1;</td>
+</tr>
+<tr>
+<td>update teacher_info set student_num = student_num + 1 where id = 1;</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>rollback；</td>
+</tr>
+<tr>
+<td>select student_num from teacher_info where id = 1;</td>
+<td></td>
+</tr>
+<tr>
+<td>结果为：50（正确应为51）</td>
+</tr>
+</tbody>
+</table>
+<p>RN，读未提交。即A、B两个事务，B事务中对某一行记录做了修改但未提交事务，此时A事务可以读到B事务修改之后但未提交的内容。那么如果此时B事务回滚，刚才事务A读到的肯定是垃圾数据，也就发生了脏读。所以RN就是本事务读到其他事务修改但未提交的内容，那么极容易可能发生脏读。</p>
+<ul>
+<li>RC读已提交示例</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>事务A</th>
+<th>事务B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>start transaction</td>
+<td>start transaction</td>
+</tr>
+<tr>
+<td>select student_num from teacher_info where id = 1;</td>
+<td></td>
+</tr>
+<tr>
+<td>结果为：50</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>UPDATE teacher_info set student_num = 49 where id = 1;</td>
+</tr>
+<tr>
+<td></td>
+<td>commit;</td>
+</tr>
+<tr>
+<td>select student_num from teacher_info where id = 1;</td>
+<td></td>
+</tr>
+<tr>
+<td>结果为：49（同一事务内前后结果不一致）</td>
+</tr>
+</tbody>
+</table>
+<p>RC，读已提交。即A、B两个事务，B事务中对某一行记录做了修改但未提交事务，此时A事务读不到B事务修改但未提交的内容。只有在B事务提交之后，A事务才能读到B已经提交的数据，所以RC隔离级别不可能出现脏读。但是可能出现不可重复读，在同一个事务中读同一条数据，前后结果不一致。</p>
+<ul>
+<li>RR 可重复读示例</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>事务A</th>
+<th>事务B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>start transaction</td>
+<td>start transaction</td>
+</tr>
+<tr>
+<td>select student_num from teacher_info where id = 1;</td>
+<td></td>
+</tr>
+<tr>
+<td>结果为：50</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>UPDATE teacher_info set student_num = 49 where id = 1;</td>
+</tr>
+<tr>
+<td></td>
+<td>commit;</td>
+</tr>
+<tr>
+<td>select student_num from teacher_info where id = 1;</td>
+<td></td>
+</tr>
+<tr>
+<td>结果为：50（InnoDB是读快照）</td>
+</tr>
+</tbody>
+</table>
+<p>RR 可重复读；读已提交可以保证没有脏读，那么如何保证可重复读呢？在当前事务读某行数据时，对数据加上排它锁，这样其他事务就无法修改这些数据，那么这样就可以实现可重复读。（InnoDB引擎为保证高并发并没有加锁，而是通过快照读来实现假的可重复读，并通过MVCC来保证数据的一致性）。</p>
+<ul>
+<li>序列化， 串行读。可重复读无法解决幻读问题，即读数据时，其他事务新增数据，那么当前事务就可能会读到之前不存在的数据。那么如何解决幻读问题呢？最直接的想法就是锁表，当前事务操作时进行锁表，那么其他事务就无法在表中插入新数据，也就不会出现幻读的问题。序列化隔离级别就是锁表读，可避免幻读。</li>
 </ul>
 <p>以上四种隔离级别，从上到下隔离级别越来越高，同时并发性也越来越差。MySQL数据库InnoDB的默认隔离级别是RR。</p>
 <h3 id="锁粒度"><a href="#锁粒度" class="headerlink" title="锁粒度"></a>锁粒度</h3><p>mysql数据库InnoDB引擎的锁粒度支持到行锁，常用的锁有行锁、间隙锁、next-key锁、表锁等。按照读写锁可分为共享锁（读锁）、排它锁（insert、update、delete）、意向共享锁（select …lock in share mode）、意向排他锁（select …for update）。（IX锁与IX锁为何是兼容的？我在可重复读隔离级别下没有发现两个锁可以共享，当一个事务获取意向排它锁后，其他事务将不能再获取这个意向锁。）</p>
@@ -657,7 +776,7 @@
 </table>
 <h4 id="行锁（Record-Locks）"><a href="#行锁（Record-Locks）" class="headerlink" title="行锁（Record Locks）"></a>行锁（Record Locks）</h4><p>行锁，即record locks，锁的粒度到行级别。例如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from teacher_info where id = 1 for update;</span><br></pre></td></tr></table></figure>
-<p>上面是一个意向排他锁，由于Id是主键，所以只对id = 1这条行记录加上意向排他锁，此时不允许其他事务对id=1这条数据加排他锁（插入、更修、删除）、共享锁。但允许增加意向排他锁、意向共享锁。</p>
+<p>上面是一个意向排他锁，由于Id是主键，所以只对id = 1这条行记录加上意向排他锁，此时不允许其他事务对id=1这条数据加排他锁（插入、更修、删除）、共享锁。但允许增加意向共享锁。</p>
 <p>并且行锁只对where查询条件中是索引的字段有效。如果where条件没有索引，例如</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from teacher_info where teacher_name = &apos;张三&apos; for update;</span><br></pre></td></tr></table></figure>
 <p>teacher_name字段不是索引，那么此时当前事务拥有的是锁整张表的next-key锁（间隙的大小是整张表，故是表锁）。</p>
@@ -674,9 +793,9 @@
 <li>(5,10]</li>
 <li>(10,∞)</li>
 </ul>
-<p>RR级别时，当对数据行teacher_id=3上锁时，(-∞,3]、(3,5]区间内不允许其他事务加排他锁，那么其他事物就无法在区间内插入、更新或者删除数据。RR也是利用next-key锁这个特点来避免幻读。但是若teacher_id上面没有索引只是普通字段，那么下面语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from teacher_info where teacher_id = 3 for update;</span><br></pre></td></tr></table></figure>
-<p>就会锁住整张表，个人理解因为没有索引索引数据只有一个区间（-∞，∞ ），故相当于对整张表加上排他锁。</p>
+<p>RR级别时，开启一个事务并执行如下语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update teacher_info set del_flag = 1 where teacher_id = 3;</span><br></pre></td></tr></table></figure>
+<p>上述语句会对数据行teacher_id=3上排他锁时，(-∞,3]、(3,5]区间内不允许其他事务加insert、delete排他锁（但除teacher_id = 3外，可以对其他行加update排它锁，很奇怪），那么其他事物就无法在区间内插入、删除数据。RR也是利用next-key锁这个特点来避免幻读。但是若teacher_id上面不是索引字段只是普通字段，那么上面语句就会锁住整张表，个人理解因为没有索引，数据只有一个区间（-∞，∞ ），故相当于对整张表加上排他锁。</p>
 <h3 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h3><p>MVCC（mutiple version concurrent control）多版本并发控制。上面提到过，为了保证并发性能，MySQL的InnoDB的RR隔离级别下读取数据时并没有对数据行加排他锁，那么InnoDB是如何保证可重复读的呢？</p>
 <p>查阅官方文档可以发现，InnoDB的可重复读是“假的”可重复读。因为RR级别下的读属于快照读，采用的是乐观锁的思想。乐观锁，CAS的底层就是基于版本来实现数据的正确性的。MVCC也一样通过版本控制来保证读取数据的正确性、有效性。在InnoDB中，读数据的冲突主要体现在不同的事务上，所以利用事务的版本号来表示数据的版本号。主要遵循下面几条规则：</p>
 <ul>
@@ -760,8 +879,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/09/10/1. assumption/" rel="next" title>
-                <i class="fa fa-chevron-left"></i> 
+              <a href="/2019/08/08/nio/" rel="next" title="java nio">
+                <i class="fa fa-chevron-left"></i> java nio
               </a>
             
           </div>
@@ -843,7 +962,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
